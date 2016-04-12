@@ -1,5 +1,7 @@
 # Wirecard Checkout Page plugin for VirtueMart 3.0
 
+[![License](https://img.shields.io/badge/license-GPLv2-blue.svg)](https://raw.githubusercontent.com/wirecard/VirtueMart3-WCP/master/LICENSE)
+
 Wirecard Checkout Page plugin for VirtueMart 3.0
 
 Tested with	Joomla 3.4.1/VirtueMart 3.0.9.4 and Joomla 3.4.8/VirtueMart 3.0.14
