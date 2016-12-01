@@ -55,7 +55,7 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 
     protected static $WINDOW_NAME = 'WirecardCEECheckoutFrame';
     protected static $PLUGIN_NAME = 'VirtueMart2_CheckoutPage';
-    protected static $PLUGIN_VERSION = '1.4.0';
+    protected static $PLUGIN_VERSION = '1.5.0';
 
     protected $_method;
     protected $_order;
@@ -341,6 +341,14 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
             $mainframe->redirect(JRoute::_('index.php/cart'), JText::_($paymentResponse));
         }
 
+        $paymentState = $input->get('paymentState');
+        if ($paymentState == WirecardCEE_QPay_ReturnFactory::STATE_PENDING ||
+            $paymentState == WirecardCEE_QPay_ReturnFactory::STATE_SUCCESS
+        ) {
+            $cart = VirtueMartCart::getCart();
+            $cart->emptyCart();
+        }
+
         // C ... completed
         // X ... cancelled
         // R ... refunded
@@ -350,7 +358,6 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
             return true;
         }
 
-        $paymentState = $input->get('paymentState');
         if ($paymentState == WirecardCEE_QPay_ReturnFactory::STATE_PENDING) {
             $modelOrder = VmModel::getModel('orders');
             $order = array();
@@ -360,8 +367,6 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
             $modelOrder->updateStatusForOneOrder($virtuemart_order_id, $order, true);
 
             $paymentResponse = JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENT_PENDING');
-            $cart = VirtueMartCart::getCart();
-            $cart->emptyCart();
             return true;
         }
 
@@ -388,9 +393,6 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
         if ($order['details']['BT']->order_status == 'C') {
             $paymentResponse = JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENT_CONFIRMED');
         }
-
-        $cart = VirtueMartCart::getCart();
-        $cart->emptyCart();
 
         $session = JFactory::getSession();
         $data = $session->get('WIRECARDCEECHECKOUT', 0, 'vm');
@@ -922,6 +924,13 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
                 ->setMaxRetries($this->_getMaxRetries())
                 ->setAutoDeposit($this->_getAutoDeposit($paymentType))
                 ->setWindowName($this->_getWindowName());
+
+            if (array_key_exists('ST', $order['details'])) {
+                $client->createConsumerMerchantCrmId($order['details']['ST']->email);
+            }
+            else {
+                $client->createConsumerMerchantCrmId($order['details']['BT']->email);
+            }
 
             if ($this->_sendConfirmationEmail()) {
                 $client->setConfirmMail($this->_getConfirmMail());

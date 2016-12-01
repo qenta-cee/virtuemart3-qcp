@@ -171,6 +171,13 @@ class WirecardCEE_QPay_FrontendClient extends WirecardCEE_Stdlib_Client_ClientAb
     const PLUGIN_VERSION = 'pluginVersion';
 
     /**
+     * Field name: customerMerchantCrmId
+     *
+     * @var string
+     */
+    const CONSUMER_MERCHANT_CRM_ID = 'consumerMerchantCrmId';
+
+    /**
      * Type of the fingerprint order
      *
      * @var int
@@ -645,6 +652,18 @@ class WirecardCEE_QPay_FrontendClient extends WirecardCEE_Stdlib_Client_ClientAb
      */
     public function setPluginVersion($sPluginVersion) {
         $this->_setField(self::PLUGIN_VERSION, $sPluginVersion);
+        return $this;
+    }
+
+    /**
+     * setter for the customer merchant crm id
+     * @param $userEmail
+     *
+     * @return $this
+     */
+    public function createConsumerMerchantCrmId($userEmail)
+    {
+        $this->_setField(self::CONSUMER_MERCHANT_CRM_ID, md5($userEmail));
         return $this;
     }
 
