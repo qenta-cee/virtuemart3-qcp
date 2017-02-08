@@ -43,6 +43,7 @@
         <filename plugin="wirecardceecheckout">wirecardceecheckout.php</filename>
         <folder>library</folder>
         <folder>wirecardceecheckout</folder>
+        <folder>language</folder>
     </files>
 
     <media folder="images" destination="../images/stories/virtuemart/payment">
