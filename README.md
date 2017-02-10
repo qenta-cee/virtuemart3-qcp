@@ -5,7 +5,7 @@
 
 Wirecard Checkout Page plugin for VirtueMart 3.0
 
-Tested with	Joomla 3.6.2/VirtueMart 3.0.18.
+Tested with	Joomla 3.6.5/VirtueMart 3.0.18.
 
 Our [Online Guides](https://guides.wirecard.at/) provide further information on payment methods and additional features. Please observe our [terms of use](https://guides.wirecard.at/shop_plugins:info#terms_of_use) regarding plugins.
 

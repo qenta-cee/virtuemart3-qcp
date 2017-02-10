@@ -32,17 +32,18 @@
 <extension version="2.5" type="plugin" group="vmpayment" method="upgrade">
     <name>Wirecard Checkout Page</name>
     <creationDate>April 05 2013</creationDate>
-    <author>Wirecard CEE</author>
+    <author>Wirecard</author>
     <authorUrl>http://www.wirecard.at/</authorUrl>
     <copyright>Copyright (C) 2013 Wirecard CEE. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>1.5.0</version>
+    <version>1.6.0</version>
     <description>VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENT_DESCRIPTION</description>
 
     <files>
         <filename plugin="wirecardceecheckout">wirecardceecheckout.php</filename>
         <folder>library</folder>
         <folder>wirecardceecheckout</folder>
+        <folder>language</folder>
     </files>
 
     <media folder="images" destination="../images/stories/virtuemart/payment">
@@ -477,4 +478,8 @@
             </fieldset>
         </fields>
     </vmconfig>
+    <updateservers>
+        <!-- Note: No spaces or linebreaks allowed between the server tags -->
+        <server type="extension" name="VirtueMart plg_vmpayment_wirecardceecheckout Update Site"><![CDATA[https://raw.githubusercontent.com/wirecard/virtuemart3-wcp/master/update/plg_vmpayment_wirecardceecheckout_update.xml]]></server>
+    </updateservers>
 </extension>
