@@ -34,9 +34,9 @@
     <creationDate>April 05 2013</creationDate>
     <author>Wirecard</author>
     <authorUrl>http://www.wirecard.at/</authorUrl>
-    <copyright>Copyright (C) 2013 Wirecard CEE. All rights reserved.</copyright>
+    <copyright>Copyright (C) 2013 Wirecard. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>1.6.0</version>
+    <version>1.7.0</version>
     <description>VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENT_DESCRIPTION</description>
 
     <files>
@@ -60,7 +60,7 @@
         <filename>invoiceb2b.png</filename>
         <filename>maestro.png</filename>
         <filename>moneta.png</filename>
-        <filename>mpass.png</filename>
+        <filename>masterpass.png</filename>
         <filename>paypal.png</filename>
         <filename>pbx.png</filename>
         <filename>poli.png</filename>
@@ -68,7 +68,6 @@
         <filename>psc.png</filename>
         <filename>quick.png</filename>
         <filename>sepa-dd.png</filename>
-        <filename>skrilldirect.png</filename>
         <filename>skrillwallet.png</filename>
         <filename>sofortueberweisung.png</filename>
         <filename>tatrapay.png</filename>
@@ -204,9 +203,15 @@
                     <option value="0">COM_VIRTUEMART_NO</option>
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
-                <field name="paymenttype_ccard" type="radio" default="1"
+                <field name="paymenttype_ccard" type="radio" default="0"
                        label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_CCARD"
                        description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_CCARD_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_masterpass" type="radio" default="0"
+                       label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_MASTERPASS"
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_MASTERPASS_DESC">
                     <option value="0">COM_VIRTUEMART_NO</option>
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
@@ -264,12 +269,6 @@
                     <option value="0">COM_VIRTUEMART_NO</option>
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
-                <field name="paymenttype_skrilldirect" type="radio" default="0"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_SKRILLDIRECT"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_SKRILLDIRECT_DESC">
-                    <option value="0">COM_VIRTUEMART_NO</option>
-                    <option value="1">COM_VIRTUEMART_YES</option>
-                </field>
                 <field name="paymenttype_sofortueberweisung" type="radio" default="1"
                        label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_SOFORTUEBERWEISUNG"
                        description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_SOFORTUEBERWEISUNG_DESC">
@@ -306,7 +305,7 @@
                     <option value="0">COM_VIRTUEMART_NO</option>
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
-                <field name="paymenttype_invoice" type="radio" default="1"
+                <field name="paymenttype_invoice" type="radio" default="0"
                        label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_INVOICE"
                        description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_INVOICE_DESC">
                     <option value="0">COM_VIRTUEMART_NO</option>
@@ -324,7 +323,7 @@
                     <option value="0">COM_VIRTUEMART_NO</option>
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
-                <field name="paymenttype_paypal" type="radio" default="1"
+                <field name="paymenttype_paypal" type="radio" default="0"
                        label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_PAYPAL"
                        description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_PAYPAL_DESC">
                     <option value="0">COM_VIRTUEMART_NO</option>
@@ -348,15 +347,9 @@
                     <option value="0">COM_VIRTUEMART_NO</option>
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
-                <field name="paymenttype_sepadd" type="radio" default="1"
+                <field name="paymenttype_sepadd" type="radio" default="0"
                        label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_SEPA-DD"
                        description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_SEPA-DD_DESC">
-                    <option value="0">COM_VIRTUEMART_NO</option>
-                    <option value="1">COM_VIRTUEMART_YES</option>
-                </field>
-                <field name="paymenttype_mpass" type="radio" default="0"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_MPASS"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_MPASS_DESC">
                     <option value="0">COM_VIRTUEMART_NO</option>
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
