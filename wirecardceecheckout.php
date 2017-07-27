@@ -815,15 +815,14 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 
         $session = JFactory::getSession();
         $data = $session->get('WIRECARDCEECHECKOUT', 0, 'vm');
-        if (empty($data)) {
+        if (empty($data) || $selectedPlugin != $plugin->$pluginmethod_id ) {
             $paymenttype_selected = null;
         } else {
             $sessionWirecard = unserialize($data);
             $paymenttype_selected = $sessionWirecard->paymenttype;
         }
 
-        $html = parent::getPluginHtml($plugin, $selectedPlugin, $pluginSalesPrice);
-        $html .= $this->renderByLayout('displaypayment', array(
+        $html = $this->renderByLayout('displaypayment', array(
             'paymenttypes' => $this->_getEnabledPaymentTypes(),
             'paymentmethod_id' => $plugin->$pluginmethod_id,
             'paymenttype_selected' => $paymenttype_selected
