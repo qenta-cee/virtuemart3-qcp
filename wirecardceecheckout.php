@@ -45,8 +45,7 @@ if (!class_exists('vmPSPlugin')) {
     require(JPATH_VM_PLUGINS . DIRECTORY_SEPARATOR . 'vmpsplugin.php');
 }
 
-require_once 'Zend/Loader/Autoloader.php';
-Zend_Loader_Autoloader::getInstance()->registerNamespace("WirecardCEE");
+require_once 'autoload.php';
 
 
 class plgVmPaymentwirecardceecheckout extends vmPSPlugin
@@ -879,9 +878,7 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
             }
 
             if ($this->_sendBasketInformation() || in_array($paymentType, $this->_getRatepayInstallmentInvoiceArray())) {
-                foreach ($this->_generateBasketInformation($cart) as $k => $v) {
-                    $client->$k = $v;
-                }
+	            $client->setBasket($this->_generateBasketInformation($cart));
             }
 
             $returnUrl = JROUTE::_(JURI::root() .
@@ -1224,11 +1221,8 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
             case WirecardCEE_QPay_PaymentType::TRUSTLY:
                 $title = JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_TRUSTLY');
                 break;
-            case WirecardCEE_QPay_PaymentType::MPASS:
-                $title = JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_MPASS');
-                break;
-            case WirecardCEE_QPay_PaymentType::SKRILLDIRECT:
-                $title = JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_SKRILLDIRECT');
+            case WirecardCEE_QPay_PaymentType::MASTERPASS:
+                $title = JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_MASTERPASS');
                 break;
             case WirecardCEE_QPay_PaymentType::SKRILLWALLET:
                 $title = JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_SKRILLWALLET');
@@ -1329,36 +1323,40 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
      */
     private function _generateBasketInformation(VirtueMartCart $cart)
     {
-        $precision = 2;
+	    $precision = 2;
 
-        $basket = new \WirecardCEE_Stdlib_Basket();
-        $basket->setCurrency($this->_getOrderCurrency());
+	    $basket = new \WirecardCEE_Stdlib_Basket();
+	    //$basket->setCurrency($this->_getOrderCurrency());
 
-        foreach ($cart->products as $pkey => $prow) {
-            $priceWithTax = $prow->prices['basePriceWithTax'];
-            if ($prow->prices['salesPriceWithDiscount'] > 0) {
-                $priceWithTax = $prow->prices['salesPriceWithDiscount'];
-            }
+	    foreach ($cart->products as $pkey => $prow) {
+		    $priceWithTax = $prow->prices['basePriceWithTax'];
+		    if ($prow->prices['salesPriceWithDiscount'] > 0) {
+			    $priceWithTax = $prow->prices['salesPriceWithDiscount'];
+		    }
 
-            $tax = round($priceWithTax - $prow->prices['product_price'], $precision - 1);
-            $unitPrice = round($priceWithTax - $tax, $precision);
+		    $tax = round($priceWithTax - $prow->prices['product_price'], $precision - 1);
+		    $unitPrice = round($priceWithTax - $tax, $precision);
 
-            $bitem = new \WirecardCEE_Stdlib_Basket_Item();
-            $bitem->setDescription($prow->product_name);
-            $bitem->setArticleNumber($prow->product_sku);
-            $bitem->setUnitPrice(number_format($unitPrice, $precision, '.', ''));
-            $bitem->setTax(number_format($tax * $prow->amount, $precision, '.', ''));
-            $basket->addItem($bitem, (int)$prow->amount);
-        }
-
-        $bitem = new \WirecardCEE_Stdlib_Basket_Item();
-        $bitem->setArticleNumber('shipping');
-        $bitem->setUnitPrice(number_format($cart->cartPrices['shipmentValue'], $precision, '.', ''));
-        $bitem->setTax(number_format($cart->cartPrices['shipmentTax'], $precision, '.', ''));
-        $bitem->setDescription(strip_tags($cart->cartData['shipmentName']));
-        $basket->addItem($bitem);
-
-        return $basket->__toArray();
+		    $bitem = new \WirecardCEE_Stdlib_Basket_Item($prow->product_sku);
+		    $bitem->setDescription($prow->product_name);
+		    $bitem->setName($prow->product_name);
+		    $bitem->setUnitGrossAmount(number_format($priceWithTax, $precision, '.', ''));
+		    $bitem->setUnitNetAmount(number_format($unitPrice, $precision, '.', ''));
+		    $bitem->setUnitTaxRate(round($tax * 100 / $unitPrice ));
+		    $bitem->setUnitTaxAmount(number_format($tax, $precision, '.', ''));
+		    $basket->addItem($bitem, (int)$prow->amount);
+	    }
+	    if ( $cart->cartData['shipmentValue'] != 0 ) {
+		    $bitem = new \WirecardCEE_Stdlib_Basket_Item( 'shipping' );
+		    $bitem->setName( strip_tags( $cart->cartData['shipmentName'] ) );
+		    $bitem->setUnitGrossAmount( number_format( $cart->cartPrices['salesPriceShipment'], $precision, '.', '' ) );
+		    $bitem->setUnitNetAmount( number_format( $cart->cartPrices['shipmentValue'], $precision, '.', '' ));
+		    $bitem->setUnitTaxAmount( number_format( $cart->cartPrices['shipmentTax'], $precision, '.', '' ) );
+		    $bitem->setUnitTaxRate(round($cart->cartPrices['shipmentTax'] * 100 / $cart->cartPrices['shipmentValue']));
+		    $bitem->setDescription( strip_tags( $cart->cartData['shipmentName'] ) );
+		    $basket->addItem( $bitem );
+	    }
+	    return $basket;
     }
 
     /**
