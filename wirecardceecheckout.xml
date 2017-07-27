@@ -376,17 +376,13 @@
                     <option value="wirecard">VMPAYMENT_WIRECARDCEECHECKOUT_SERVICE_PROVIDER_WIRECARD</option>
                 </field>
                 <field type="text" name="invoice_min" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MIN"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MIN_DESC"/>
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MIN_DESC" default="10"/>
                 <field type="text" name="invoice_max" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MAX"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MAX_DESC"/>
-                <field type="text" name="invoice_min_basket_size" size="5"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MIN_BASKET_SIZE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MIN_BASKET_SIZE_DESC"/>
-                <field type="text" name="invoice_max_basket_size" size="5"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MAX_BASKET_SIZE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MAX_BASKET_SIZE_DESC"/>
-                <field type="text" name="invoice_min_age" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_RATEPAY_MIN_AGE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_RATEPAY_MIN_AGE_DESC"/>
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MAX_DESC" default="3500"/>
+                <field type="text" name="invoice_currencies" size="50" label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_CURR"
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_CURR_DESC" default="EUR"/>
+                <field type="text" name="invoice_countries" size="50" label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_COUNTRIES"
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_COUNTRIES_DESC" default="AT,DE,CH"/>
 
                 <field type="spacer" default="" level="level1"/>
                 <field name="installment_provider" type="list" default="0"
@@ -396,30 +392,19 @@
                     <option value="ratepay">VMPAYMENT_WIRECARDCEECHECKOUT_SERVICE_PROVIDER_RATEPAY</option>
                 </field>
                 <field type="text" name="installment_min" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MIN"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MIN_DESC"/>
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MIN_DESC" default="150" />
                 <field type="text" name="installment_max" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MAX"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MAX_DESC"/>
-                <field type="text" name="installment_min_basket_size" size="5"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MIN_BASKET_SIZE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MIN_BASKET_SIZE_DESC"/>
-                <field type="text" name="installment_max_basket_size" size="5"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MAX_BASKET_SIZE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MAX_BASKET_SIZE_DESC"/>
-                <field type="text" name="installment_min_age" size="5"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_RATEPAY_MIN_AGE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_RATEPAY_MIN_AGE_DESC"/>
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MAX_DESC" default="3500" />
+                <field type="text" name="installment_currencies" size="50" label="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_CURR"
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_CURR_DESC" default="EUR"/>
+                <field type="text" name="installment_countries" size="50" label="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_COUNTRIES"
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_COUNTRIES_DESC" default="AT,DE,CH"/>
 
                 <field type="spacer" default="" level="level1"/>
                 <field type="text" name="invoiceb2b_min" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MIN"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MIN_DESC"/>
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MIN_DESC" default="25"/>
                 <field type="text" name="invoiceb2b_max" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MAX"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MAX_DESC"/>
-                <field type="text" name="invoiceb2b_min_basket_size" size="5"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MIN_BASKET_SIZE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MIN_BASKET_SIZE_DESC"/>
-                <field type="text" name="invoiceb2b_max_basket_size" size="5"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MAX_BASKET_SIZE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MAX_BASKET_SIZE_DESC"/>
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MAX_DESC" default="3500"/>
 
                 <field type="spacer" default="" level="level1"/>
                 <field name="payolution_terms" type="radio" default="0"

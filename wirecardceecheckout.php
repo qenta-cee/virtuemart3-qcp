@@ -1326,7 +1326,6 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 	    $precision = 2;
 
 	    $basket = new \WirecardCEE_Stdlib_Basket();
-	    //$basket->setCurrency($this->_getOrderCurrency());
 
 	    foreach ($cart->products as $pkey => $prow) {
 		    $priceWithTax = $prow->prices['basePriceWithTax'];
@@ -1365,171 +1364,139 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
      * @param VirtueMartCart $cart
      * @return bool
      */
-    protected function isInvoiceAllowed(VirtueMartCart $cart)
-    {
-        $currency = $this->_getCurrency($cart);
+	protected function isInvoiceAllowed(VirtueMartCart $cart)
+	{
+		$currency = $this->_getCurrency($cart);
+		$currencies = explode( ",", $this->_getMethod()->invoice_currencies );
+		if (! in_array( $currency, $currencies ) )
+			return false;
 
-        if ($currency != 'EUR')
-            return false;
+		$country = ShopFunctions::getCountryByID($cart->BT['virtuemart_country_id'], 'country_2_code');
+		$countries = explode( ",", $this->_getMethod()->invoice_countries );
+		if (! in_array( $country, $countries ) )
+			return false;
 
-        $billingAddress = $cart->BT;
-        $shippingAddress = $cart->ST;
 
-        if (!is_array($billingAddress)) {
-            return false;
-        }
+		$billingAddress = $cart->BT;
+		$shippingAddress = $cart->ST;
 
-        if (!array_key_exists('birthday', $billingAddress)) {
-            return false;
-        }
+		if (!is_array($billingAddress)) {
+			return false;
+		}
 
-        $d1 = new DateTime($billingAddress['birthday']);
-        $diff = $d1->diff(new DateTime);
-        $customerAge = $diff->format('%y');
+		if ($cart->ST) {
+			$fields = array('virtuemart_country_id', 'company', 'first_name', 'last_name', 'address_1', 'address_2', 'zip', 'city');
+			foreach ($fields as $f) {
+				if ($billingAddress[$f] != $shippingAddress[$f])
+					return false;
+			}
+		}
 
-        if ($cart->ST) {
-            $fields = array('virtuemart_country_id', 'company', 'first_name', 'last_name', 'address_1', 'address_2', 'zip', 'city');
-            foreach ($fields as $f) {
-                if ($billingAddress[$f] != $shippingAddress[$f])
-                    return false;
-            }
-        }
+		$prices = $cart->getCartPrices();
+		$total = $prices['billTotal'];
 
-        if ($customerAge < $this->_getInvoiceMinAge())
-            return false;
+		if ($this->_getInvoiceMin() && $this->_getInvoiceMin() > $total)
+			return false;
 
-        $prices = $cart->getCartPrices();
-        $total = $prices['billTotal'];
-        $basketSize = count($cart->products) + 1;
+		if ($this->_getInvoiceMax() && $this->_getInvoiceMax() < $total)
+			return false;
 
-        if ($this->_getInvoiceMin() && $this->_getInvoiceMin() > $total)
-            return false;
+		return true;
+	}
 
-        if ($this->_getInvoiceMax() && $this->_getInvoiceMax() < $total)
-            return false;
+	/**
+	 * Check whether invoiceb2b is allowed or not
+	 *
+	 * @param VirtueMartCart $cart
+	 * @return bool
+	 */
+	protected function isInvoiceB2BAllowed(VirtueMartCart $cart)
+	{
+		$currency = $this->_getCurrency($cart);
 
-        if ($this->_getInvoiceMinBasketSize() && $this->_getInvoiceMinBasketSize() > $basketSize)
-            return false;
+		if ($currency != 'EUR')
+			return false;
 
-        if ($this->_getInvoiceMaxBasketSize() && $this->_getInvoiceMaxBasketSize() <= $basketSize)
-            return false;
+		$billingAddress = $cart->BT;
+		$shippingAddress = $cart->ST;
 
-        return true;
-    }
+		if (!is_array($billingAddress)) {
+			return false;
+		}
 
-    /**
-     * Check whether invoiceb2b is allowed or not
-     *
-     * @param VirtueMartCart $cart
-     * @return bool
-     */
-    protected function isInvoiceB2BAllowed(VirtueMartCart $cart)
-    {
-        $currency = $this->_getCurrency($cart);
+		if (!array_key_exists('company', $billingAddress)) {
+			return false;
+		}
 
-        if ($currency != 'EUR')
-            return false;
+		if (!strlen($billingAddress['company'])) {
+			return false;
+		}
 
-        $billingAddress = $cart->BT;
-        $shippingAddress = $cart->ST;
+		if ($cart->ST) {
+			$fields = array('virtuemart_country_id', 'company', 'first_name', 'last_name', 'address_1', 'address_2', 'zip', 'city');
+			foreach ($fields as $f) {
+				if ($billingAddress[$f] != $shippingAddress[$f])
+					return false;
+			}
+		}
 
-        if (!is_array($billingAddress)) {
-            return false;
-        }
+		$prices = $cart->getCartPrices();
+		$total = $prices['billTotal'];
 
-        if (!array_key_exists('company', $billingAddress)) {
-            return false;
-        }
+		if ($this->_getInvoiceB2BMin() && $this->_getInvoiceB2BMin() > $total)
+			return false;
 
-        if (!strlen($billingAddress['company'])) {
-            return false;
-        }
+		if ($this->_getInvoiceB2BMax() && $this->_getInvoiceB2BMax() < $total)
+			return false;
 
-        if ($cart->ST) {
-            $fields = array('virtuemart_country_id', 'company', 'first_name', 'last_name', 'address_1', 'address_2', 'zip', 'city');
-            foreach ($fields as $f) {
-                if ($billingAddress[$f] != $shippingAddress[$f])
-                    return false;
-            }
-        }
+		return true;
+	}
 
-        $prices = $cart->getCartPrices();
-        $total = $prices['billTotal'];
-        $basketSize = count($cart->products) + 1;
+	/**
+	 * Check whether installment is allowed or not
+	 *
+	 * @param VirtueMartCart $cart
+	 * @return bool
+	 */
+	protected function isInstallmentAllowed($cart)
+	{
+		$currency = $this->_getCurrency($cart);
+		$currencies = explode( ",", $this->_getMethod()->installment_currencies );
+		if (! in_array( $currency, $currencies ) )
+			return false;
 
-        if ($this->_getInvoiceB2BMin() && $this->_getInvoiceB2BMin() > $total)
-            return false;
+		$country = ShopFunctions::getCountryByID($cart->BT['virtuemart_country_id'], 'country_2_code');
+		$countries = explode( ",", $this->_getMethod()->installment_countries );
+		if (! in_array( $country, $countries ) )
+			return false;
 
-        if ($this->_getInvoiceB2BMax() && $this->_getInvoiceB2BMax() < $total)
-            return false;
+		$billingAddress = $cart->BT;
+		$shippingAddress = $cart->ST;
 
-        if ($this->_getInvoiceB2BMinBasketSize() && $this->_getInvoiceB2BMinBasketSize() > $basketSize)
-            return false;
+		if (!is_array($billingAddress)) {
+			return false;
+		}
 
-        if ($this->_getInvoiceB2BMaxBasketSize() && $this->_getInvoiceB2BMaxBasketSize() <= $basketSize)
-            return false;
+		if ($cart->ST) {
+			$fields = array('virtuemart_country_id', 'company', 'first_name', 'last_name', 'address_1', 'address_2', 'zip', 'city');
+			foreach ($fields as $f) {
+				if ($billingAddress[$f] != $shippingAddress[$f])
+					return false;
+			}
 
-        return true;
-    }
+		}
 
-    /**
-     * Check whether installment is allowed or not
-     *
-     * @param VirtueMartCart $cart
-     * @return bool
-     */
-    protected function isInstallmentAllowed($cart)
-    {
-        $currency = $this->_getCurrency($cart);
+		$prices = $cart->getCartPrices();
+		$total = $prices['billTotal'];
 
-        if ($currency != 'EUR')
-            return false;
+		if ($this->_getInstallmentMin() && $this->_getInstallmentMin() > $total)
+			return false;
 
-        $billingAddress = $cart->BT;
-        $shippingAddress = $cart->ST;
+		if ($this->_getInstallmentMax() && $this->_getInstallmentMax() < $total)
+			return false;
 
-        if (!is_array($billingAddress)) {
-            return false;
-        }
-
-        if (!array_key_exists('birthday', $billingAddress)) {
-            return false;
-        }
-
-        $d1 = new DateTime($billingAddress['birthday']);
-        $diff = $d1->diff(new DateTime);
-        $customerAge = $diff->format('%y');
-
-        if ($cart->ST) {
-            $fields = array('virtuemart_country_id', 'company', 'first_name', 'last_name', 'address_1', 'address_2', 'zip', 'city');
-            foreach ($fields as $f) {
-                if ($billingAddress[$f] != $shippingAddress[$f])
-                    return false;
-            }
-
-        }
-
-        if ($customerAge < $this->_getInstallmentMinAge())
-            return false;
-
-        $prices = $cart->getCartPrices();
-        $total = $prices['billTotal'];
-        $basketSize = count($cart->products) + 1;
-
-        if ($this->_getInstallmentMin() && $this->_getInstallmentMin() > $total)
-            return false;
-
-        if ($this->_getInstallmentMax() && $this->_getInstallmentMax() < $total)
-            return false;
-
-        if ($this->_getInstallmentMinBasketSize() && $this->_getInstallmentMinBasketSize() > $basketSize)
-            return false;
-
-        if ($this->_getInstallmentMaxBasketSize() && $this->_getInstallmentMaxBasketSize() <= $basketSize)
-            return false;
-
-        return true;
-    }
+		return true;
+	}
 
     /*
      * getter/setter
