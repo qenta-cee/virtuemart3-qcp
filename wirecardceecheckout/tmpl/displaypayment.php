@@ -65,20 +65,32 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
 			<?php
 			$birthday = '<select name="wcp_day" id="wcp_day_'.strtolower($pt['value']).'" style="width:auto;">';
 			for ( $day = 31; $day > 0; $day -- ) {
-				$birthday .= '<option value="'.$day.'"> '.$day.' </option>';
+				$selected = '';
+				if ($viewData['birth_day'] == $day){
+					$selected = 'selected';
+				}
+				$birthday .= '<option value="'.$day.'" '.$selected.'> '.$day.' </option>';
 			}
 
 			$birthday .= '</select>';
 
 			$birthday .= '<select name="wcp_month" id="wcp_month_'.strtolower($pt['value']).'" style="width:auto;">';
 			for ( $month = 12; $month > 0; $month -- ) {
-				$birthday .= '<option value="'.$month.'"> '.$month.' </option>';
+				$selected = '';
+				if ($viewData['birth_month'] == $month){
+					$selected = 'selected';
+				}
+				$birthday .= '<option value="'.$month.'" '.$selected.'> '.$month.' </option>';
 			}
 			$birthday .= '</select>';
 
 			$birthday .= '<select name="wcp_year" id="wcp_year_'.strtolower($pt['value']).'" style="width:auto;">';
 			for ( $year = date( "Y" ); $year > 1900; $year -- ) {
-				$birthday .= '<option value="'.$year.'"> '.$year.' </option>';
+				$selected = '';
+				if ($viewData['birth_year'] == $year){
+					$selected = 'selected';
+				}
+				$birthday .= '<option value="'.$year.'" '.$selected.'> '.$year.' </option>';
 			}
 			$birthday .= '</select>';
 			echo $birthday;

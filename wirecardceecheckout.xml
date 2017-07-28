@@ -170,14 +170,6 @@
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
 
-                <field name="layout" type="list" default="0" label="VMPAYMENT_WIRECARDCEECHECKOUT_LAYOUT"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_LAYOUT_DESC">
-                    <option value="">COM_VIRTUEMART_NO</option>
-                    <option value="desktop">VMPAYMENT_WIRECARDCEECHECKOUT_LAYOUT_DESKTOP</option>
-                    <option value="tablet">VMPAYMENT_WIRECARDCEECHECKOUT_LAYOUT_TABLET</option>
-                    <option value="smartphone">VMPAYMENT_WIRECARDCEECHECKOUT_LAYOUT_SMARTPHONE</option>
-                </field>
-
                 <field name="max_retries" type="text" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_MAX_RETRIES"
                        default="-1" description="VMPAYMENT_WIRECARDCEECHECKOUT_MAX_RETRIES_DESC"/>
 
