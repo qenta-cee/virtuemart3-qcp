@@ -1066,8 +1066,10 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
             $paymentTypes[19]['image'] = strtolower(WirecardCEE_QPay_PaymentType::INVOICE);
             $paymentTypes[19]['title'] = $this->_getPaymentTypeName(WirecardCEE_QPay_PaymentType::INVOICE);
             $paymentTypes[19]['value'] = WirecardCEE_QPay_PaymentType::INVOICE;
+	        $paymentTypes[19]['birthday_header'] = JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_BIRTHDAY_HEADER');
 
             if ($this->_getInvoiceFinancialInstitution() == self::WCP_SERVICE_PROVIDER_PAYOLUTION && $this->_getPayolutionTerms()) {
+	            $paymentTypes[19]['additional_header'] = JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_PAYOLUTION_CONSENT_HEADER');
                 $paymentTypes[19]['consent_text'] = $this->_getPayolutionConsentText();
                 $paymentTypes[19]['consent_checked'] = '';
                 if ($sessionWirecard != null) {
@@ -1080,6 +1082,7 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
             $paymentTypes[20]['title'] = $this->_getPaymentTypeName(WirecardCEE_QPay_PaymentType::INVOICE . 'B2B');
             $paymentTypes[20]['value'] = WirecardCEE_QPay_PaymentType::INVOICE . 'B2B';
 
+	        $paymentTypes[20]['additional_header'] = JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_PAYOLUTION_CONSENT_HEADER');
             $paymentTypes[20]['consent_text'] = $this->_getPayolutionConsentText();
             $paymentTypes[20]['consent_checked'] = '';
             if ($sessionWirecard != null) {
@@ -1090,8 +1093,10 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
             $paymentTypes[21]['image'] = strtolower(WirecardCEE_QPay_PaymentType::INSTALLMENT);
             $paymentTypes[21]['title'] = $this->_getPaymentTypeName(WirecardCEE_QPay_PaymentType::INSTALLMENT);
             $paymentTypes[21]['value'] = WirecardCEE_QPay_PaymentType::INSTALLMENT;
+	        $paymentTypes[21]['birthday_header'] = JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_BIRTHDAY_HEADER');
 
             if ($this->_getInstallmentFinancialInstitution() == self::WCP_SERVICE_PROVIDER_PAYOLUTION && $this->_getPayolutionTerms()) {
+	            $paymentTypes[21]['additional_header'] = JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_PAYOLUTION_CONSENT_HEADER');
                 $paymentTypes[21]['consent_text'] = $this->_getPayolutionConsentText();
                 $paymentTypes[21]['consent_checked'] = '';
                 if ($sessionWirecard != null) {

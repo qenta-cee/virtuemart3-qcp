@@ -59,10 +59,38 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
                 </span>
         </label>
     </div>
-	<?php if ( isset( $pt['consent_text'] ) ) { ?>
-        <div style="margin: 0 6px 6px 6px;">
+	<?php if ( isset( $pt['birthday_header'] ) && $viewData['paymenttype_selected'] == strtolower( $pt['value'] ) ) { ?>
+        <div style="margin-left:23px;" class="additional-information">
+            <b><?php echo $pt['birthday_header']; ?></b><br/>
+			<?php
+			$birthday = '<select name="wcp_day" id="wcp_day_'.strtolower($pt['value']).'" style="width:auto;">';
+			for ( $day = 31; $day > 0; $day -- ) {
+				$birthday .= '<option value="'.$day.'"> '.$day.' </option>';
+			}
+
+			$birthday .= '</select>';
+
+			$birthday .= '<select name="wcp_month" id="wcp_month_'.strtolower($pt['value']).'" style="width:auto;">';
+			for ( $month = 12; $month > 0; $month -- ) {
+				$birthday .= '<option value="'.$month.'"> '.$month.' </option>';
+			}
+			$birthday .= '</select>';
+
+			$birthday .= '<select name="wcp_year" id="wcp_year_'.strtolower($pt['value']).'" style="width:auto;">';
+			for ( $year = date( "Y" ); $year > 1900; $year -- ) {
+				$birthday .= '<option value="'.$year.'"> '.$year.' </option>';
+			}
+			$birthday .= '</select>';
+			echo $birthday;
+			?>
+        </div>
+	<?php } ?>
+
+	<?php if ( isset( $pt['additional_header'] ) && $viewData['paymenttype_selected'] == strtolower( $pt['value'] ) ) { ?>
+        <div style="margin-left:23px;" class="additional-information">
+            <b><?php echo $pt['additional_header']; ?></b><br/>
             <label>
-                <input type="checkbox" id="consent_<?php echo strtolower( $pt['value'] ); ?>"
+                <input type="checkbox" id="consent_<?php echo strtolower( $pt['value'] ); ?>" class="required"
                        name="consent_<?php echo strtolower( $pt['value'] ); ?>"<?php echo $pt['consent_checked']; ?>>
 				<?php echo $pt['consent_text']; ?>
             </label>
@@ -73,19 +101,41 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
     <script type="text/javascript">
         jQuery('#checkoutForm').submit(function (event) {
             jQuery('.wirecard_paymenttype').each(function () {
-                if (this.checked) {
+                if (jQuery(this).prop('checked')) {
+                    if (jQuery('#wcp_day_' + this.value).val()) {
+                        var day = jQuery('#wcp_day_' + this.value).val();
+                        var month = jQuery('#wcp_month_' + this.value).val();
+                        var year = jQuery('#wcp_year_' + this.value).val();
+                        var dateStr = year + '-' + month + '-' + day;
+                        var minAge = 18;
+
+                        var birthdate = new Date(dateStr);
+                        var year = birthdate.getFullYear();
+                        var today = new Date();
+                        var limit = new Date((today.getFullYear() - minAge), today.getMonth(), today.getDate());
+
+                        if (birthdate > limit) {
+                            jQuery('.vmLoadingDiv').remove();
+                            jQuery('#checkoutFormSubmit').prop("disabled", false);
+                            jQuery('#checkoutFormSubmit').addClass("vm-button-correct");
+                            event.preventDefault();
+                            alert("<?php echo JText::_( 'VMPAYMENT_WIRECARDCEECHECKOUT_BIRTHDAY_ERROR' ); ?>");
+                            return;
+                        }
+                    }
                     var checkbox = null;
                     if (jQuery('#consent_' + this.value).length) {
                         checkbox = jQuery('#consent_' + this.value);
                     }
 
                     if (checkbox != null) {
-                        if (!checkbox.prop('checked')) {
+                        if (!checkbox.prop('checked') ) {
                             jQuery('.vmLoadingDiv').remove();
                             jQuery('#checkoutFormSubmit').prop("disabled", false);
                             jQuery('#checkoutFormSubmit').addClass("vm-button-correct");
                             event.preventDefault();
                             alert("<?php echo JText::_( 'VMPAYMENT_WIRECARDCEECHECKOUT_PAYOLUTION_CONSENT_ACCEPT' ); ?>");
+                            return;
                         }
                     }
                 }
@@ -96,6 +146,9 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
             jQuery(this).change(function (evt) {
                 jQuery('#payment_id_<?php echo $viewData['paymentmethod_id'] ?>').prop('checked', true);
             });
+        });
+        jQuery('input[name=virtuemart_paymentmethod_id]').change(function (evt) {
+            jQuery('.additional-information').remove();
         });
     </script>
 </div>
