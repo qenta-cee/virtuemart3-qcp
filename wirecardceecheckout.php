@@ -921,6 +921,9 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
                 ->setAutoDeposit($this->_getAutoDeposit($paymentType))
                 ->setWindowName($this->_getWindowName());
 
+	        if ( in_array($paymentType, array(WirecardCEE_QPay_PaymentType::IDL, WirecardCEE_QPay_PaymentType::EPS ) ) ) {
+		        $client->setFinancialInstitution($_POST['financialInstitution']);
+	        }
             if (array_key_exists('ST', $order['details'])) {
                 $client->createConsumerMerchantCrmId($order['details']['ST']->email);
             }
@@ -1006,6 +1009,7 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
             $paymentTypes[7]['image'] = strtolower(WirecardCEE_QPay_PaymentType::EPS);
             $paymentTypes[7]['title'] = $this->_getPaymentTypeName(WirecardCEE_QPay_PaymentType::EPS);
             $paymentTypes[7]['value'] = WirecardCEE_QPay_PaymentType::EPS;
+	        $paymentTypes[9]['financial_inst'] = WirecardCEE_QPay_PaymentType::getFinancialInstitutions('EPS');
         }
         if ((int)$this->_getMethod()->paymenttype_giropay == 1) {
             $paymentTypes[8]['image'] = strtolower(WirecardCEE_QPay_PaymentType::GIROPAY);
@@ -1016,6 +1020,7 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
             $paymentTypes[9]['image'] = strtolower(WirecardCEE_QPay_PaymentType::IDL);
             $paymentTypes[9]['title'] = $this->_getPaymentTypeName(WirecardCEE_QPay_PaymentType::IDL);
             $paymentTypes[9]['value'] = WirecardCEE_QPay_PaymentType::IDL;
+	        $paymentTypes[9]['financial_inst'] = WirecardCEE_QPay_PaymentType::getFinancialInstitutions('IDL');
         }
         if ((int)$this->_getMethod()->paymenttype_poli == 1) {
             $paymentTypes[10]['image'] = strtolower(WirecardCEE_QPay_PaymentType::POLI);
