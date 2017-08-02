@@ -34,9 +34,9 @@
     <creationDate>April 05 2013</creationDate>
     <author>Wirecard</author>
     <authorUrl>http://www.wirecard.at/</authorUrl>
-    <copyright>Copyright (C) 2013 Wirecard CEE. All rights reserved.</copyright>
+    <copyright>Copyright (C) 2013 Wirecard. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>1.6.0</version>
+    <version>1.7.0</version>
     <description>VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENT_DESCRIPTION</description>
 
     <files>
@@ -60,7 +60,7 @@
         <filename>invoiceb2b.png</filename>
         <filename>maestro.png</filename>
         <filename>moneta.png</filename>
-        <filename>mpass.png</filename>
+        <filename>masterpass.png</filename>
         <filename>paypal.png</filename>
         <filename>pbx.png</filename>
         <filename>poli.png</filename>
@@ -68,7 +68,6 @@
         <filename>psc.png</filename>
         <filename>quick.png</filename>
         <filename>sepa-dd.png</filename>
-        <filename>skrilldirect.png</filename>
         <filename>skrillwallet.png</filename>
         <filename>sofortueberweisung.png</filename>
         <filename>tatrapay.png</filename>
@@ -165,20 +164,6 @@
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
 
-                <field name="mobile_detect" type="radio" default="0" label="VMPAYMENT_WIRECARDCEECHECKOUT_MOBILE_DETECT"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_MOBILE_DETECT_DESC">
-                    <option value="0">COM_VIRTUEMART_NO</option>
-                    <option value="1">COM_VIRTUEMART_YES</option>
-                </field>
-
-                <field name="layout" type="list" default="0" label="VMPAYMENT_WIRECARDCEECHECKOUT_LAYOUT"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_LAYOUT_DESC">
-                    <option value="">COM_VIRTUEMART_NO</option>
-                    <option value="desktop">VMPAYMENT_WIRECARDCEECHECKOUT_LAYOUT_DESKTOP</option>
-                    <option value="tablet">VMPAYMENT_WIRECARDCEECHECKOUT_LAYOUT_TABLET</option>
-                    <option value="smartphone">VMPAYMENT_WIRECARDCEECHECKOUT_LAYOUT_SMARTPHONE</option>
-                </field>
-
                 <field name="max_retries" type="text" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_MAX_RETRIES"
                        default="-1" description="VMPAYMENT_WIRECARDCEECHECKOUT_MAX_RETRIES_DESC"/>
 
@@ -204,9 +189,15 @@
                     <option value="0">COM_VIRTUEMART_NO</option>
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
-                <field name="paymenttype_ccard" type="radio" default="1"
+                <field name="paymenttype_ccard" type="radio" default="0"
                        label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_CCARD"
                        description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_CCARD_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_masterpass" type="radio" default="0"
+                       label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_MASTERPASS"
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_MASTERPASS_DESC">
                     <option value="0">COM_VIRTUEMART_NO</option>
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
@@ -264,12 +255,6 @@
                     <option value="0">COM_VIRTUEMART_NO</option>
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
-                <field name="paymenttype_skrilldirect" type="radio" default="0"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_SKRILLDIRECT"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_SKRILLDIRECT_DESC">
-                    <option value="0">COM_VIRTUEMART_NO</option>
-                    <option value="1">COM_VIRTUEMART_YES</option>
-                </field>
                 <field name="paymenttype_sofortueberweisung" type="radio" default="1"
                        label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_SOFORTUEBERWEISUNG"
                        description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_SOFORTUEBERWEISUNG_DESC">
@@ -306,7 +291,7 @@
                     <option value="0">COM_VIRTUEMART_NO</option>
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
-                <field name="paymenttype_invoice" type="radio" default="1"
+                <field name="paymenttype_invoice" type="radio" default="0"
                        label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_INVOICE"
                        description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_INVOICE_DESC">
                     <option value="0">COM_VIRTUEMART_NO</option>
@@ -324,7 +309,7 @@
                     <option value="0">COM_VIRTUEMART_NO</option>
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
-                <field name="paymenttype_paypal" type="radio" default="1"
+                <field name="paymenttype_paypal" type="radio" default="0"
                        label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_PAYPAL"
                        description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_PAYPAL_DESC">
                     <option value="0">COM_VIRTUEMART_NO</option>
@@ -348,15 +333,9 @@
                     <option value="0">COM_VIRTUEMART_NO</option>
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
-                <field name="paymenttype_sepadd" type="radio" default="1"
+                <field name="paymenttype_sepadd" type="radio" default="0"
                        label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_SEPA-DD"
                        description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_SEPA-DD_DESC">
-                    <option value="0">COM_VIRTUEMART_NO</option>
-                    <option value="1">COM_VIRTUEMART_YES</option>
-                </field>
-                <field name="paymenttype_mpass" type="radio" default="0"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_MPASS"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_MPASS_DESC">
                     <option value="0">COM_VIRTUEMART_NO</option>
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
@@ -383,17 +362,13 @@
                     <option value="wirecard">VMPAYMENT_WIRECARDCEECHECKOUT_SERVICE_PROVIDER_WIRECARD</option>
                 </field>
                 <field type="text" name="invoice_min" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MIN"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MIN_DESC"/>
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MIN_DESC" default="10"/>
                 <field type="text" name="invoice_max" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MAX"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MAX_DESC"/>
-                <field type="text" name="invoice_min_basket_size" size="5"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MIN_BASKET_SIZE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MIN_BASKET_SIZE_DESC"/>
-                <field type="text" name="invoice_max_basket_size" size="5"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MAX_BASKET_SIZE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MAX_BASKET_SIZE_DESC"/>
-                <field type="text" name="invoice_min_age" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_RATEPAY_MIN_AGE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_RATEPAY_MIN_AGE_DESC"/>
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_MAX_DESC" default="3500"/>
+                <field type="text" name="invoice_currencies" size="50" label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_CURR"
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_CURR_DESC" default="EUR"/>
+                <field type="text" name="invoice_countries" size="50" label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_COUNTRIES"
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICE_COUNTRIES_DESC" default="AT,DE,CH"/>
 
                 <field type="spacer" default="" level="level1"/>
                 <field name="installment_provider" type="list" default="0"
@@ -403,30 +378,19 @@
                     <option value="ratepay">VMPAYMENT_WIRECARDCEECHECKOUT_SERVICE_PROVIDER_RATEPAY</option>
                 </field>
                 <field type="text" name="installment_min" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MIN"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MIN_DESC"/>
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MIN_DESC" default="150" />
                 <field type="text" name="installment_max" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MAX"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MAX_DESC"/>
-                <field type="text" name="installment_min_basket_size" size="5"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MIN_BASKET_SIZE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MIN_BASKET_SIZE_DESC"/>
-                <field type="text" name="installment_max_basket_size" size="5"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MAX_BASKET_SIZE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MAX_BASKET_SIZE_DESC"/>
-                <field type="text" name="installment_min_age" size="5"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_RATEPAY_MIN_AGE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_RATEPAY_MIN_AGE_DESC"/>
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_MAX_DESC" default="3500" />
+                <field type="text" name="installment_currencies" size="50" label="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_CURR"
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_CURR_DESC" default="EUR"/>
+                <field type="text" name="installment_countries" size="50" label="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_COUNTRIES"
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INSTALLMENT_COUNTRIES_DESC" default="AT,DE,CH"/>
 
                 <field type="spacer" default="" level="level1"/>
                 <field type="text" name="invoiceb2b_min" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MIN"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MIN_DESC"/>
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MIN_DESC" default="25"/>
                 <field type="text" name="invoiceb2b_max" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MAX"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MAX_DESC"/>
-                <field type="text" name="invoiceb2b_min_basket_size" size="5"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MIN_BASKET_SIZE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MIN_BASKET_SIZE_DESC"/>
-                <field type="text" name="invoiceb2b_max_basket_size" size="5"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MAX_BASKET_SIZE"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MAX_BASKET_SIZE_DESC"/>
+                       description="VMPAYMENT_WIRECARDCEECHECKOUT_INVOICEB2B_MAX_DESC" default="3500"/>
 
                 <field type="spacer" default="" level="level1"/>
                 <field name="payolution_terms" type="radio" default="0"
