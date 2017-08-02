@@ -164,12 +164,6 @@
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
 
-                <field name="mobile_detect" type="radio" default="0" label="VMPAYMENT_WIRECARDCEECHECKOUT_MOBILE_DETECT"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_MOBILE_DETECT_DESC">
-                    <option value="0">COM_VIRTUEMART_NO</option>
-                    <option value="1">COM_VIRTUEMART_YES</option>
-                </field>
-
                 <field name="max_retries" type="text" size="5" label="VMPAYMENT_WIRECARDCEECHECKOUT_MAX_RETRIES"
                        default="-1" description="VMPAYMENT_WIRECARDCEECHECKOUT_MAX_RETRIES_DESC"/>
 

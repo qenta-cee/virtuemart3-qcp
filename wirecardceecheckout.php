@@ -1141,7 +1141,7 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 			$paymentTypes[26]['title'] = $this->_getPaymentTypeName(WirecardCEE_QPay_PaymentType::SEPADD);
 			$paymentTypes[26]['value'] = WirecardCEE_QPay_PaymentType::SEPADD;
 		}
-		if ((int)$this->_getMethod()->paymenttype_mpass == 1) {
+		if ((int)$this->_getMethod()->paymenttype_masterpass == 1) {
 			$paymentTypes[27]['image'] = strtolower(WirecardCEE_QPay_PaymentType::MASTERPASS);
 			$paymentTypes[27]['title'] = $this->_getPaymentTypeName(WirecardCEE_QPay_PaymentType::MASTERPASS);
 			$paymentTypes[27]['value'] = WirecardCEE_QPay_PaymentType::MASTERPASS;
