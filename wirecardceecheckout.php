@@ -54,7 +54,7 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 
 	protected static $WINDOW_NAME = 'WirecardCEECheckoutFrame';
 	protected static $PLUGIN_NAME = 'VirtueMart2_CheckoutPage';
-	protected static $PLUGIN_VERSION = '1.7.0';
+	protected static $PLUGIN_VERSION = '1.7.1';
 
 	protected $_method;
 	protected $_order;
@@ -678,7 +678,6 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 				break;
 			}
 		}
-
 		return $found;
 	}
 
@@ -833,13 +832,28 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 			$birthYear = $sessionWirecard->birthYear;
 		}
 
+		$customer_id = $this->_getCustomerId();
+
+		if( isset( $_SESSION['wcp-consumerDeviceId'] ) ) {
+			$consumerDeviceId = $_SESSION['wcp-consumerDeviceId'];
+		} else {
+			$timestamp = microtime();
+			$consumerDeviceId = md5( $customer_id . "_" . $timestamp );
+			$_SESSION['wcp-consumerDeviceId'] = $consumerDeviceId;
+		}
+		$ratepay = '<script language="JavaScript">var di = {t:"' . $consumerDeviceId . '",v:"WDWL",l:"Checkout"};</script>';
+		$ratepay .= '<script type="text/javascript" src="//d.ratepay.com/' . $consumerDeviceId . '/di.js"></script>';
+		$ratepay .= '<noscript><link rel="stylesheet" type="text/css" href="//d.ratepay.com/di.css?t=' . $consumerDeviceId . '&v=WDWL&l=Checkout"></noscript>';
+		$ratepay .= '<object type="application/x-shockwave-flash" data="//d.ratepay.com/WDWL/c.swf" width="0" height="0"><param name="movie" value="//d.ratepay.com/WDWL/c.swf" /><param name="flashvars" value="t=' . $consumerDeviceId . '&v=WDWL"/><param name="AllowScriptAccess" value="always"/></object>';
+
 		$html = $this->renderByLayout('displaypayment', array(
 			'paymenttypes' => $this->_getEnabledPaymentTypes(),
 			'paymentmethod_id' => $plugin->$pluginmethod_id,
 			'paymenttype_selected' => $paymenttype_selected,
 			'birth_day' => $birthDay,
 			'birth_month' => $birthMonth,
-			'birth_year' => $birthYear
+			'birth_year' => $birthYear,
+			'ratepay_script' => $ratepay
 		));
 
 		return $html;
@@ -936,6 +950,11 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 			       ->setMaxRetries($this->_getMaxRetries())
 			       ->setAutoDeposit($this->_getAutoDeposit($paymentType))
 			       ->setWindowName($this->_getWindowName());
+
+			if ( isset( $_SESSION['wcp-consumerDeviceId'] ) ){
+				$client->consumerDeviceId = $_SESSION['wcp-consumerDeviceId'];
+				unset( $_SESSION['wcp-consumerDeviceId'] );
+			}
 
 			if ($paymentType == \WirecardCEE_QPay_PaymentType::MASTERPASS) {
 				$client->setShippingProfile('NO_SHIPPING');
@@ -1309,11 +1328,13 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 			$session = JFactory::getSession();
 			$data = $session->get('WIRECARDCEECHECKOUT', null, 'vm');
 			$sessionWirecard = unserialize($data);
-			$birthDay = $sessionWirecard->birthDay;
-			$birthMonth = $sessionWirecard->birthMonth;
-			$birthYear = $sessionWirecard->birthYear;
-			$birthday = new DateTime($birthYear . "-" . $birthMonth . "-" . $birthDay);
-			$consumerData->setBirthDate($birthday);
+			if (isset($sessionWirecard->birthDay)) {
+				$birthDay = $sessionWirecard->birthDay;
+				$birthMonth = $sessionWirecard->birthMonth;
+				$birthYear = $sessionWirecard->birthYear;
+				$birthday = new DateTime($birthYear . "-" . $birthMonth . "-" . $birthDay);
+				$consumerData->setBirthDate($birthday);
+			}
 		}
 		$consumerData->setEmail($billingData->email);
 
