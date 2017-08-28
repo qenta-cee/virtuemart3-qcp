@@ -34,6 +34,7 @@ defined( '_JEXEC' ) or die();
 ?>
 <input type="radio" name="virtuemart_paymentmethod_id" id="payment_id_<?php echo $viewData['paymentmethod_id'] ?>"
        value="<?php echo $viewData['paymentmethod_id'] ?>" style="display:none;">
+<?php echo $viewData['ratepay_script'] ?>
 </div>
 <?php
 $url = JURI::root() . 'images/stories/virtuemart/' . $this->_psType . '/';
