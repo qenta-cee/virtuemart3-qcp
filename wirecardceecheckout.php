@@ -259,7 +259,7 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 		$this->storePSPluginInternalData($dbValues);
 
 		if ($this->_useIFrame()) {
-			$html = sprintf('<iframe src="%s" width="100%%" height="640" name="%s" border="0" frameborder="0"></iframe>',
+			$html = sprintf('<iframe src="%s" width="100%%" height="900" name="%s" border="0" frameborder="0"></iframe>',
 				$redirectUrl,
 				$this->_getWindowName());
 
