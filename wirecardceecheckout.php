@@ -628,11 +628,6 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 			}
 		}
 
-		if (!$found) {
-			$msg .= JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_ERROR_PAYMENTTYPE');
-			return false;
-		}
-
 		$session = JFactory::getSession();
 		$sessionWirecard = new stdClass();
 		$sessionWirecard->paymenttype = $paymenttype;
@@ -643,6 +638,11 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 		$sessionWirecard->birthMonth = $birthMonth;
 		$sessionWirecard->birthYear = $birthYear;
 		$session->set('WIRECARDCEECHECKOUT', serialize($sessionWirecard), 'vm');
+
+        if (!$found) {
+            $msg .= JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_ERROR_PAYMENTTYPE');
+            return false;
+        }
 
 		return true;
 	}
