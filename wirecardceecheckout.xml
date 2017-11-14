@@ -36,7 +36,7 @@
     <authorUrl>http://www.wirecard.at/</authorUrl>
     <copyright>Copyright (C) 2013 Wirecard. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <version>1.7.2</version>
+    <version>1.7.3</version>
     <description>VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENT_DESCRIPTION</description>
 
     <files>
