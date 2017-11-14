@@ -66,7 +66,6 @@
         <filename>poli.png</filename>
         <filename>przelewy24.png</filename>
         <filename>psc.png</filename>
-        <filename>quick.png</filename>
         <filename>sepa-dd.png</filename>
         <filename>skrillwallet.png</filename>
         <filename>sofortueberweisung.png</filename>
@@ -318,12 +317,6 @@
                 <field name="paymenttype_psc" type="radio" default="0"
                        label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_PSC"
                        description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_PSC_DESC">
-                    <option value="0">COM_VIRTUEMART_NO</option>
-                    <option value="1">COM_VIRTUEMART_YES</option>
-                </field>
-                <field name="paymenttype_quick" type="radio" default="0"
-                       label="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_QUICK"
-                       description="VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_QUICK_DESC">
                     <option value="0">COM_VIRTUEMART_NO</option>
                     <option value="1">COM_VIRTUEMART_YES</option>
                 </field>
