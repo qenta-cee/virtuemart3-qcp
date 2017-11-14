@@ -1145,6 +1145,11 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 			$paymentTypes[23]['title'] = $this->_getPaymentTypeName(WirecardCEE_QPay_PaymentType::PSC);
 			$paymentTypes[23]['value'] = WirecardCEE_QPay_PaymentType::PSC;
 		}
+		if ((int)$this->_getMethod()->paymenttype_quick == 1) {
+			$paymentTypes[24]['image'] = strtolower(WirecardCEE_QPay_PaymentType::QUICK);
+			$paymentTypes[24]['title'] = $this->_getPaymentTypeName(WirecardCEE_QPay_PaymentType::QUICK);
+			$paymentTypes[24]['value'] = WirecardCEE_QPay_PaymentType::QUICK;
+		}
 		if ((int)$this->_getMethod()->paymenttype_skrillwallet == 1) {
 			$paymentTypes[25]['image'] = strtolower(WirecardCEE_QPay_PaymentType::SKRILLWALLET);
 			$paymentTypes[25]['title'] = $this->_getPaymentTypeName(WirecardCEE_QPay_PaymentType::SKRILLWALLET);
@@ -1212,6 +1217,9 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 				break;
 			case WirecardCEE_QPay_PaymentType::PSC:
 				$title = JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_PSC');
+				break;
+			case WirecardCEE_QPay_PaymentType::QUICK:
+				$title = JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_QUICK');
 				break;
 			case WirecardCEE_QPay_PaymentType::PAYPAL:
 				$title = JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_PAYMENTTYPE_PAYPAL');
