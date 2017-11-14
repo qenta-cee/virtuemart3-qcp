@@ -58,7 +58,6 @@ abstract class WirecardCEE_Stdlib_PaymentTypeAbstract
     const PBX = 'PBX';
     const POLI = 'POLI';
     const PSC = 'PSC';
-    const QUICK = 'QUICK';
     const SEPADD = 'SEPA-DD';
     const ELV = 'ELV';
     const SKRILLDIRECT = 'SKRILLDIRECT';
