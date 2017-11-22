@@ -54,7 +54,7 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 
 	protected static $WINDOW_NAME = 'WirecardCEECheckoutFrame';
 	protected static $PLUGIN_NAME = 'VirtueMart2_CheckoutPage';
-	protected static $PLUGIN_VERSION = '1.7.3';
+	protected static $PLUGIN_VERSION = '1.7.4';
 
 	protected $_method;
 	protected $_order;
