@@ -168,6 +168,11 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
         jQuery('.wirecard_paymenttype').each(function () {
             jQuery(this).change(function (evt) {
                 jQuery('#payment_id_<?php echo $viewData['paymentmethod_id'] ?>').prop('checked', true);
+                jQuery.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "<?php echo JURI::root() ?>index.php?option=com_virtuemart&view=plugin&type=vmpayment&nosef=1&name=wirecardceecheckout&loadJS=1&action=changePaymentTypeAjax&paymenttype=" + (this).value
+                });
             });
         });
         jQuery('input[name=virtuemart_paymentmethod_id]').change(function (evt) {

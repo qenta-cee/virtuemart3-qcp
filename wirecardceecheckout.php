@@ -1929,4 +1929,26 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 		return $this->onCheckAutomaticSelected($cart, $cart_prices, $paymentCounter);
 	}
 
+    public function changePaymentTypeAjax($paymentType)
+    {
+        $session = JFactory::getSession();
+        $data = $session->get('WIRECARDCEECHECKOUT', 0, 'vm');
+        if (!empty($data)) {
+            $sessionWirecard = unserialize($data);
+            $sessionWirecard->paymenttype = $paymentType;
+        }
+        $session->set('WIRECARDCEECHECKOUT', serialize($sessionWirecard), 'vm');
+    }
+
+    public function plgVmOnSelfCallFE()
+    {
+        $action = vRequest::getCmd('action');
+        $paymentType = vRequest::getWord('paymenttype', '');
+        switch ($action) {
+            case "changePaymentTypeAjax":
+                $this->changePaymentTypeAjax($paymentType);
+                break;
+        }
+    }
+
 }
