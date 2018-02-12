@@ -54,7 +54,7 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 
 	protected static $WINDOW_NAME = 'WirecardCEECheckoutFrame';
 	protected static $PLUGIN_NAME = 'VirtueMart2_CheckoutPage';
-	protected static $PLUGIN_VERSION = '1.7.4';
+	protected static $PLUGIN_VERSION = '1.7.5';
 
 	protected $_method;
 	protected $_order;
@@ -832,19 +832,23 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 			$birthYear = $sessionWirecard->birthYear;
 		}
 
-		$customer_id = $this->_getCustomerId();
+		$ratepay = "";
+        if (((int)$this->_getMethod()->paymenttype_invoice == 1 && $this->_getInvoiceFinancialInstitution() == "ratepay") ||
+            ((int)$this->_getMethod()->paymenttype_installment == 1 && $this->_getInstallmentFinancialInstitution() == "ratepay")) {
+            $customer_id = $this->_getCustomerId();
+            if (isset($_SESSION['wcp-consumerDeviceId'])) {
+                $consumerDeviceId = $_SESSION['wcp-consumerDeviceId'];
+            } else {
+                $timestamp = microtime();
+                $consumerDeviceId = md5( $customer_id . "_" . $timestamp );
+                $_SESSION['wcp-consumerDeviceId'] = $consumerDeviceId;
+            }
 
-		if( isset( $_SESSION['wcp-consumerDeviceId'] ) ) {
-			$consumerDeviceId = $_SESSION['wcp-consumerDeviceId'];
-		} else {
-			$timestamp = microtime();
-			$consumerDeviceId = md5( $customer_id . "_" . $timestamp );
-			$_SESSION['wcp-consumerDeviceId'] = $consumerDeviceId;
-		}
-		$ratepay = '<script language="JavaScript">var di = {t:"' . $consumerDeviceId . '",v:"WDWL",l:"Checkout"};</script>';
-		$ratepay .= '<script type="text/javascript" src="//d.ratepay.com/' . $consumerDeviceId . '/di.js"></script>';
-		$ratepay .= '<noscript><link rel="stylesheet" type="text/css" href="//d.ratepay.com/di.css?t=' . $consumerDeviceId . '&v=WDWL&l=Checkout"></noscript>';
-		$ratepay .= '<object type="application/x-shockwave-flash" data="//d.ratepay.com/WDWL/c.swf" width="0" height="0"><param name="movie" value="//d.ratepay.com/WDWL/c.swf" /><param name="flashvars" value="t=' . $consumerDeviceId . '&v=WDWL"/><param name="AllowScriptAccess" value="always"/></object>';
+            $ratepay = '<script language="JavaScript">var di = {t:"' . $consumerDeviceId . '",v:"WDWL",l:"Checkout"};</script>';
+            $ratepay .= '<script type="text/javascript" src="//d.ratepay.com/' . $consumerDeviceId . '/di.js"></script>';
+            $ratepay .= '<noscript><link rel="stylesheet" type="text/css" href="//d.ratepay.com/di.css?t=' . $consumerDeviceId . '&v=WDWL&l=Checkout"></noscript>';
+            $ratepay .= '<object type="application/x-shockwave-flash" data="//d.ratepay.com/WDWL/c.swf" width="0" height="0"><param name="movie" value="//d.ratepay.com/WDWL/c.swf" /><param name="flashvars" value="t=' . $consumerDeviceId . '&v=WDWL"/><param name="AllowScriptAccess" value="always"/></object>';
+        }
 
 		$html = $this->renderByLayout('displaypayment', array(
 			'paymenttypes' => $this->_getEnabledPaymentTypes(),
