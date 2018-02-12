@@ -112,7 +112,7 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
     <?php if ( isset( $pt['financial_inst'] ) ) { ?>
         <div style="margin-left:23px; display: <?= ($viewData['paymenttype_selected'] !== strtolower( $pt['value'] )) ? 'none' : 'block';?>;" class="additional-information">
             <b><?php echo JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_FINANCIAL_INST_HEADER'); ?></b><br/>
-            <select name="financialInstitution" id="financialInstitutions">
+            <select name="financialInstitution_<?= strtolower( $pt['value'] ); ?>" id="financialInstitutions_<?= strtolower( $pt['value'] ); ?>">
                 <?php foreach($pt['financial_inst'] as $key => $value) { ?>
                     <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
                 <?php } ?>
