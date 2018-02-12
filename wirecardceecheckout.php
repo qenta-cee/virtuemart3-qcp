@@ -960,13 +960,20 @@ class plgVmPaymentwirecardceecheckout extends vmPSPlugin
 				$client->setShippingProfile('NO_SHIPPING');
 			}
 
-			if ( in_array($paymentType, array(WirecardCEE_QPay_PaymentType::IDL, WirecardCEE_QPay_PaymentType::EPS ) ) ) {
-                if (isset($_POST['financialInstitution'])) {
-                    $client->setFinancialInstitution($_POST['financialInstitution']);
+            if ($paymentType == WirecardCEE_QPay_PaymentType::IDL) {
+                if (isset($_POST['financialInstitution_idl'])) {
+                    $client->setFinancialInstitution($_POST['financialInstitution_idl']);
                 } else {
-                    $client->setFinancialInstitution($sessionWirecard->additional["financialInstitution"]);
+                    $client->setFinancialInstitution($sessionWirecard->additional["financialInstitution_idl"]);
                 }
-			}
+            } else if ($paymentType == WirecardCEE_QPay_PaymentType::EPS) {
+                if (isset($_POST['financialInstitution_eps'])) {
+                    $client->setFinancialInstitution($_POST['financialInstitution_eps']);
+                } else {
+                    $client->setFinancialInstitution($sessionWirecard->additional["financialInstitution_eps"]);
+                }
+            }
+
 			if (array_key_exists('ST', $order['details'])) {
 				$client->createConsumerMerchantCrmId($order['details']['ST']->email);
 			}
