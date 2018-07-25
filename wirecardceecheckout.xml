@@ -76,10 +76,14 @@
         <filename>wirecard.png</filename>
     </media>
 
-    <languages>
-        <language tag="en-GB">en-GB.plg_vmpayment_wirecardceecheckout.ini</language>
-        <language tag="de-DE">de-DE.plg_vmpayment_wirecardceecheckout.ini</language>
-    </languages>
+    <fileset>
+        <files folder="language/de-DE" target="language/de-DE">
+            <filename>en-GB.plg_vmpayment_wirecardceecheckout.ini</filename>
+        </files>
+        <files folder="language/en-GB" target="language/en-GB">
+            <filename>de-DE.plg_vmpayment_wirecardceecheckout.ini</filename>
+        </files>
+    </fileset>
 
     <vmconfig>
         <fields name="params">
