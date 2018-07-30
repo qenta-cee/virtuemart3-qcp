@@ -1,11 +1,13 @@
-# Wirecard Checkout Page plugin for VirtueMart 3.0
+# Wirecard Checkout Page plugin for VirtueMart 3
 
 [![License](https://img.shields.io/badge/license-GPLv2-blue.svg)](https://raw.githubusercontent.com/wirecard/VirtueMart3-WCP/master/LICENSE)
 [![PHP v5.6](https://img.shields.io/badge/PHP-v5.6-yellow.svg)](http://www.php.net)
+[![Joomla v3.8.10](https://img.shields.io/badge/Joomla-v3.8.10-green.svg)](https://www.joomla.org)
+[![VirtueMart v3.2.14](https://img.shields.io/badge/VirtueMart-v3.2.14-green.svg)](https://www.virtuemart.de/)
 
-Wirecard Checkout Page plugin for VirtueMart 3.0
+Wirecard Checkout Page plugin for VirtueMart 3
 
-Tested with	Joomla 3.8.3/VirtueMart 3.2.12.
+Tested with	Joomla 3.8.10/VirtueMart 3.2.14.
 
 Our [Online Guides](https://guides.wirecard.at/) provide further information on payment methods and additional features. Please observe our [terms of use](https://guides.wirecard.at/shop_plugins:info#terms_of_use) regarding plugins.
 
