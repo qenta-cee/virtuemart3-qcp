@@ -5,6 +5,14 @@
 [![Joomla v3.8.10](https://img.shields.io/badge/Joomla-v3.8.10-green.svg)](https://www.joomla.org)
 [![VirtueMart v3.2.14](https://img.shields.io/badge/VirtueMart-v3.2.14-green.svg)](https://www.virtuemart.de/)
 
+----
+**IMPORTANT INFORMATION**  
+You are visiting a shop extension which will become obsolete in the near future and will not be continued.  
+Please take a look at [our online documentation](https://doc.wirecard.com), which describes in more detail how to integrate the Wirecard Payment Gateway into your online shop.  
+If you have any questions, please contact shop-systems-support@wirecard.com  
+
+----
+
 Wirecard Checkout Page plugin for VirtueMart 3
 
 Tested with	Joomla 3.8.10/VirtueMart 3.2.14.
