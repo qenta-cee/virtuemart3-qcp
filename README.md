@@ -8,7 +8,7 @@
 ----
 **IMPORTANT INFORMATION**  
 You are visiting a shop extension which will become obsolete in the near future and will not be continued.  
-Please take a look at [our online documentation](https://doc.wirecard.com), which describes in more detail how to integrate the Wirecard Payment Gateway into your online shop.  
+Please take a look at our [online documentation](https://doc.wirecard.com), which describes in more detail how to integrate the Wirecard Payment Gateway into your online shop.  
 If you have any questions, please contact shop-systems-support@wirecard.com  
 
 ----
