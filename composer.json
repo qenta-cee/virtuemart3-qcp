@@ -1,0 +1,13 @@
+{
+    "name": "qenta/virtuemart3-qcp",
+    "description": "QENTA - QPay Checkout Page extension for Joomla with Virtuemart",
+    "type": "joomla-extension",
+    "license": "GPLv3",
+    "minimum-stability": "dev",
+    "config": {
+        "vendor-dir": "library"
+    },
+    "require": {
+        "qenta/checkout-client-library": "dev-master"
+    }
+}
