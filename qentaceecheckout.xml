@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  * Shop System Plugins
+ * - Terms of use can be found under
+ * https://guides.qenta.com/shop_plugins:info
+ * - License can be found under:
+ * https://github.com/qenta-cee/gambio-qcs/blob/master/LICENSE
+-->
+<extension version="2.5" type="plugin" group="vmpayment" method="upgrade">
+    <name>QENTA Checkout Page</name>
+    <creationDate>January 21 2021</creationDate>
+    <author>QENTA Payment CEE GmbH</author>
+    <authorUrl>http://www.qenta-cee.com/</authorUrl>
+    <copyright>Copyright (C) 2021 QENTA Payment CEE GmbH. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+    <version>2.0.0</version>
+    <description>VMPAYMENT_QENTACEECHECKOUT_PAYMENT_DESCRIPTION</description>
+
+    <files>
+        <filename plugin="qentaceecheckout">qentaceecheckout.php</filename>
+        <folder>library</folder>
+        <folder>qentaceecheckout</folder>
+        <folder>language</folder>
+    </files>
+
+    <media folder="images" destination="../images/stories/virtuemart/payment">
+        <filename>bancontact_mistercash.png</filename>
+        <filename>ccard.png</filename>
+        <filename>ccard-moto.png</filename>
+        <filename>ekonto.png</filename>
+        <filename>epay_bg.png</filename>
+        <filename>eps.png</filename>
+        <filename>giropay.png</filename>
+        <filename>idl.png</filename>
+        <filename>installment.png</filename>
+        <filename>invoice.png</filename>
+        <filename>invoiceb2b.png</filename>
+        <filename>maestro.png</filename>
+        <filename>moneta.png</filename>
+        <filename>masterpass.png</filename>
+        <filename>paypal.png</filename>
+        <filename>pbx.png</filename>
+        <filename>poli.png</filename>
+        <filename>przelewy24.png</filename>
+        <filename>psc.png</filename>
+        <filename>sepa-dd.png</filename>
+        <filename>skrillwallet.png</filename>
+        <filename>sofortueberweisung.png</filename>
+        <filename>tatrapay.png</filename>
+        <filename>trustly.png</filename>
+        <filename>trustpay.png</filename>
+        <filename>voucher.png</filename>
+        <filename>qenta.png</filename>
+    </media>
+
+    <fileset>
+        <files folder="language/de-DE" target="language/de-DE">
+            <filename>en-GB.plg_vmpayment_qentaceecheckout.ini</filename>
+        </files>
+        <files folder="language/en-GB" target="language/en-GB">
+            <filename>de-DE.plg_vmpayment_qentaceecheckout.ini</filename>
+        </files>
+    </fileset>
+
+    <vmconfig>
+        <fields name="params">
+            <fieldset name="basic">
+
+                <field type="vmtitle" description="VMPAYMENT_QENTACEECHECKOUT_PAYMENT_DESCRIPTION"/>
+
+                <field type="spacer" default="VMPAYMENT_QENTACEECHECKOUT_PAYMENT_TITLE" level="level1"/>
+
+                <field name="payment_logos" type="hidden"/>
+
+                <field name="configuration" type="list" default="0" label="VMPAYMENT_QENTACEECHECKOUT_CONFIGURATION"
+                       description="VMPAYMENT_QENTACEECHECKOUT_CONFIGURATION_DESC">
+                    <option value="production">VMPAYMENT_QENTACEECHECKOUT_MODE_PRODUCTION</option>
+                    <option value="demo">VMPAYMENT_QENTACEECHECKOUT_MODE_DEMO</option>
+                    <option value="test">VMPAYMENT_QENTACEECHECKOUT_MODE_TEST</option>
+                    <option value="test3d">VMPAYMENT_QENTACEECHECKOUT_MODE_TEST3D</option>
+                </field>
+
+                <field name="customer_id" type="text" size="50" label="VMPAYMENT_QENTACEECHECKOUT_CUSTOMER_ID"
+                       default="D200001" description="VMPAYMENT_QENTACEECHECKOUT_CUSTOMER_ID_DESC" required="true"
+                       class="required"/>
+                <field name="shop_id" type="text" size="50" label="VMPAYMENT_QENTACEECHECKOUT_SHOP_ID" default=""
+                       description="VMPAYMENT_QENTACEECHECKOUT_SHOP_ID_DESC"/>
+                <field name="secret" type="text" size="50" label="VMPAYMENT_QENTACEECHECKOUT_SECRET"
+                       default="B8AKTPWBRMNBV455FG6M2DANE99WU2" description="VMPAYMENT_QENTACEECHECKOUT_SECRET_DESC"
+                       required="true" class="required"/>
+                <field name="service_url" type="text" size="70" label="VMPAYMENT_QENTACEECHECKOUT_SERVICEURL"
+                       description="VMPAYMENT_QENTACEECHECKOUT_SERVICEURL_DESC" required="true" class="required"/>
+
+                <field type="vmtitle" description="VMPAYMENT_QENTACEECHECKOUT_CHECK_CONFIGURATION_BUTTON"/>
+                <field type="spacer" default="" level="level1"/>
+
+                <field name="keep_unsuccessful_orders" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_KEEP_UNSUCCESSFUL_ORDERS"
+                       description="VMPAYMENT_QENTACEECHECKOUT_KEEP_UNSUCCESSFUL_ORDERS_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+
+                <field name="display_text" type="text" size="70" label="VMPAYMENT_QENTACEECHECKOUT_DISPLAYTEXT"
+                       description="VMPAYMENT_QENTACEECHECKOUT_DISPLAYTEXT_DESC"/>
+                <field name="image_url" type="text" size="70" label="VMPAYMENT_QENTACEECHECKOUT_IMAGEURL"
+                       description="VMPAYMENT_QENTACEECHECKOUT_IMAGEURL_DESC"/>
+                <field name="background_color" type="text" size="5"
+                       label="VMPAYMENT_QENTACEECHECKOUT_BACKGROUND_COLOR"
+                       description="VMPAYMENT_QENTACEECHECKOUT_BACKGROUND_COLOR_DESC"/>
+                <field name="shopname" type="text" size="5" label="VMPAYMENT_QENTACEECHECKOUT_SHOPNAME"
+                       description="VMPAYMENT_QENTACEECHECKOUT_SHOPNAME_DESC"/>
+
+                <field name="send_shipping_data" type="radio" default="1"
+                       label="VMPAYMENT_QENTACEECHECKOUT_SEND_SHIPPING_DATA"
+                       description="VMPAYMENT_QENTACEECHECKOUT_SEND_SHIPPING_DATA_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+
+                <field name="send_billing_data" type="radio" default="1"
+                       label="VMPAYMENT_QENTACEECHECKOUT_SEND_BILLING_DATA"
+                       description="VMPAYMENT_QENTACEECHECKOUT_SEND_BILLING_DATA_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+
+                <field name="send_confirmation_email" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_SEND_CONFIRMATION_EMAIL"
+                       description="VMPAYMENT_QENTACEECHECKOUT_SEND_CONFIRMATION_EMAIL_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="auto_deposit" type="radio" default="0" label="VMPAYMENT_QENTACEECHECKOUT_AUTO_DEPOSIT"
+                       description="VMPAYMENT_QENTACEECHECKOUT_AUTO_DEPOSIT_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+
+                <field name="send_basket_information" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_SEND_BASKET_INFORMATION"
+                       description="VMPAYMENT_QENTACEECHECKOUT_SEND_BASKET_INFORMATION_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+
+                <field name="max_retries" type="text" size="5" label="VMPAYMENT_QENTACEECHECKOUT_MAX_RETRIES"
+                       default="-1" description="VMPAYMENT_QENTACEECHECKOUT_MAX_RETRIES_DESC"/>
+
+                <field name="use_iframe" type="radio" default="1" label="VMPAYMENT_QENTACEECHECKOUT_USE_IFRAME"
+                       description="VMPAYMENT_QENTACEECHECKOUT_USE_IFRAME_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+
+                <field name="duplicate_request_check" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_DUPLICATE_REQUEST"
+                       description="VMPAYMENT_QENTACEECHECKOUT_DUPLICATE_REQUEST_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+
+                <field type="spacer" default="" level="level1"/>
+                <field type="spacer" default="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPES" level="level1"/>
+
+                <field name="paymenttype_select" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_SELECT"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_CCARD_SELECT">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_ccard" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_CCARD"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_CCARD_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_masterpass" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_MASTERPASS"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_MASTERPASS_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_ccard_moto" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_CCARD_MOTO"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_CCARD_MOTO">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_maestro" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_MAESTRO"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_MAESTRO_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_bancontact_mistercash" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_BANCONTACT_MISTERCASH"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_BANCONTACT_MISTERCASH_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_ekonto" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_EKONTO"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_EKONTO_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_eps" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_EPS"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_EPS_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_giropay" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_GIROPAY"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_GIROPAY_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_idl" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_IDL"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_IDL_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_poli" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_POLI"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_POLI_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_p24" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_P24"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_P24_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_sofortueberweisung" type="radio" default="1"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_SOFORTUEBERWEISUNG"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_SOFORTUEBERWEISUNG_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_tatrapay" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_TATRAPAY"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_TATRAPAY_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_trustly" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_TRUSTLY"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_TRUSTLY_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_trustpay" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_TRUSTPAY"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_TRUSTPAY_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_epay_bg" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_EPAY_BG"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_EPAY_BG_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_moneta" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_MONETA"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_MONETA_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_invoice" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_INVOICE"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_INVOICE_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_invoiceb2b" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_INVOICEB2B"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_INVOICEB2B_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_installment" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_INSTALLMENT"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_INSTALLMENT_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_paypal" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_PAYPAL"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_PAYPAL_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_psc" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_PSC"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_PSC_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_skrillwallet" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_SKRILLWALLET"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_SKRILLWALLET_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_sepadd" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_SEPA-DD"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_SEPA-DD_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_pbx" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_PBX"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_PBX_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field name="paymenttype_voucher" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_VOUCHER"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYMENTTYPE_VOUCHER_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field type="spacer" default="" level="level1"/>
+                <field type="spacer" default="" level="level1"/>
+
+                <field name="invoice_provider" type="list" default="2"
+                       label="VMPAYMENT_QENTACEECHECKOUT_INVOICE_PROVIDER"
+                       description="VMPAYMENT_QENTACEECHECKOUT_INVOICE_PROVIDER_DESC">
+                    <option value="payolution">VMPAYMENT_QENTACEECHECKOUT_SERVICE_PROVIDER_PAYOLUTION</option>
+                    <option value="ratepay">VMPAYMENT_QENTACEECHECKOUT_SERVICE_PROVIDER_RATEPAY</option>
+                    <option value="wirecard">VMPAYMENT_QENTACEECHECKOUT_SERVICE_PROVIDER_WIRECARD</option>
+                </field>
+                <field type="text" name="invoice_min" size="5" label="VMPAYMENT_QENTACEECHECKOUT_INVOICE_MIN"
+                       description="VMPAYMENT_QENTACEECHECKOUT_INVOICE_MIN_DESC" default="10"/>
+                <field type="text" name="invoice_max" size="5" label="VMPAYMENT_QENTACEECHECKOUT_INVOICE_MAX"
+                       description="VMPAYMENT_QENTACEECHECKOUT_INVOICE_MAX_DESC" default="3500"/>
+                <field type="text" name="invoice_currencies" size="50" label="VMPAYMENT_QENTACEECHECKOUT_INVOICE_CURR"
+                       description="VMPAYMENT_QENTACEECHECKOUT_INVOICE_CURR_DESC" default="EUR"/>
+                <field type="text" name="invoice_countries" size="50" label="VMPAYMENT_QENTACEECHECKOUT_INVOICE_COUNTRIES"
+                       description="VMPAYMENT_QENTACEECHECKOUT_INVOICE_COUNTRIES_DESC" default="AT,DE,CH"/>
+
+                <field type="spacer" default="" level="level1"/>
+                <field name="installment_provider" type="list" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_INSTALLMENT_PROVIDER"
+                       description="VMPAYMENT_QENTACEECHECKOUT_INSTALLMENT_PROVIDER_DESC">
+                    <option value="payolution">VMPAYMENT_QENTACEECHECKOUT_SERVICE_PROVIDER_PAYOLUTION</option>
+                    <option value="ratepay">VMPAYMENT_QENTACEECHECKOUT_SERVICE_PROVIDER_RATEPAY</option>
+                </field>
+                <field type="text" name="installment_min" size="5" label="VMPAYMENT_QENTACEECHECKOUT_INSTALLMENT_MIN"
+                       description="VMPAYMENT_QENTACEECHECKOUT_INSTALLMENT_MIN_DESC" default="150" />
+                <field type="text" name="installment_max" size="5" label="VMPAYMENT_QENTACEECHECKOUT_INSTALLMENT_MAX"
+                       description="VMPAYMENT_QENTACEECHECKOUT_INSTALLMENT_MAX_DESC" default="3500" />
+                <field type="text" name="installment_currencies" size="50" label="VMPAYMENT_QENTACEECHECKOUT_INSTALLMENT_CURR"
+                       description="VMPAYMENT_QENTACEECHECKOUT_INSTALLMENT_CURR_DESC" default="EUR"/>
+                <field type="text" name="installment_countries" size="50" label="VMPAYMENT_QENTACEECHECKOUT_INSTALLMENT_COUNTRIES"
+                       description="VMPAYMENT_QENTACEECHECKOUT_INSTALLMENT_COUNTRIES_DESC" default="AT,DE,CH"/>
+
+                <field type="spacer" default="" level="level1"/>
+                <field type="text" name="invoiceb2b_min" size="5" label="VMPAYMENT_QENTACEECHECKOUT_INVOICEB2B_MIN"
+                       description="VMPAYMENT_QENTACEECHECKOUT_INVOICEB2B_MIN_DESC" default="25"/>
+                <field type="text" name="invoiceb2b_max" size="5" label="VMPAYMENT_QENTACEECHECKOUT_INVOICEB2B_MAX"
+                       description="VMPAYMENT_QENTACEECHECKOUT_INVOICEB2B_MAX_DESC" default="3500"/>
+
+                <field type="spacer" default="" level="level1"/>
+                <field name="payolution_terms" type="radio" default="0"
+                       label="VMPAYMENT_QENTACEECHECKOUT_PAYOLUTION_TERMS"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYOLUTION_TERMS_DESC">
+                    <option value="0">COM_VIRTUEMART_NO</option>
+                    <option value="1">COM_VIRTUEMART_YES</option>
+                </field>
+                <field type="text" name="payolution_mid" size="20" label="VMPAYMENT_QENTACEECHECKOUT_PAYOLUTION_MID"
+                       description="VMPAYMENT_QENTACEECHECKOUT_PAYOLUTION_MID_DESC"/>
+
+                <field type="spacer" default="" level="level1"/>
+                <field type="spacer" default="" level="level1"/>
+
+                <field name="cost_per_transaction" type="text" label="VMPAYMENT_STANDARD_COST_PER_TRANSACTION"
+                       description="VMPAYMENT_STANDARD_COST_PER_TRANSACTION_EXPLAIN"/>
+                <field name="cost_percent_total" type="text" label="VMPAYMENT_STANDARD_COST_PERCENT_TOTAL"
+                       description="VMPAYMENT_STANDARD_COST_PERCENT_TOTAL_EXPLAIN"/>
+
+                <field type="spacer" default="" level="level1"/>
+                <field type="spacer" default="VMPAYMENT_QENTACEECHECKOUT_PAYMENT_PAGE" level="level1"/>
+                <field name="status_pending" type="vmorderstate" scope="com_virtuemart" default="U"
+                       label="VMPAYMENT_QENTACEECHECKOUT_STATUS_PENDING"
+                       description="VMPAYMENT_QENTACEECHECKOUT_STATUS_PENDING_EXPLAIN"/>
+                <field name="status_success" type="vmorderstate" scope="com_virtuemart" default="C"
+                       label="VMPAYMENT_QENTACEECHECKOUT_STATUS_SUCCESS"
+                       description="VMPAYMENT_QENTACEECHECKOUT_STATUS_SUCCESS_EXPLAIN"/>
+                <field name="status_failed" type="vmorderstate" scope="com_virtuemart" default="X"
+                       label="VMPAYMENT_QENTACEECHECKOUT_STATUS_FAILED"
+                       description="VMPAYMENT_QENTACEECHECKOUT_STATUS_FAILED_EXPLAIN"/>
+
+                <field type="spacer" default="" level="level1"/>
+                <field type="spacer" default="" level="level1"/>
+
+                <field type="vmtitle" description="VMPAYMENT_QENTACEECHECKOUT_SUPPORT_TITLE"/>
+                <field name="support_email" type="list" default="2" label="VMPAYMENT_QENTACEECHECKOUT_SUPPORT_TO"
+                       description="VMPAYMENT_QENTACEECHECKOUT_SUPPORT_TO_DESC">
+                    <option value=""></option>
+                    <option value="support@qenta.com">VMPAYMENT_QENTACEECHECKOUT_SUPPORT_AT</option>
+                </field>
+                <field type="text" name="support_replyto" size="20"
+                       label="VMPAYMENT_QENTACEECHECKOUT_SUPPORT_REPLY_TO"
+                       description="VMPAYMENT_QENTACEECHECKOUT_SUPPORT_REPLY_TO_DESC"/>
+                <field type="textarea" name="support_message" label="VMPAYMENT_QENTACEECHECKOUT_SUPPORT_MESSAGE"
+                       description="VMPAYMENT_QENTACEECHECKOUT_SUPPORT_MESSAGE_DESC"/>
+                <field type="vmtitle" description="VMPAYMENT_QENTACEECHECKOUT_SUPPORT_BUTTON"/>
+            </fieldset>
+        </fields>
+    </vmconfig>
+    <updateservers>
+        <!-- Note: No spaces or linebreaks allowed between the server tags -->
+        <server type="extension" name="VirtueMart plg_vmpayment_qentaceecheckout Update Site"><![CDATA[https://raw.githubusercontent.com/qenta-cee/virtuemart3-qcp/master/update/plg_vmpayment_qentaceecheckout_update.xml]]></server>
+    </updateservers>
+</extension>
