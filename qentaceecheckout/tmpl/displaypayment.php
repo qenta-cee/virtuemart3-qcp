@@ -1,34 +1,11 @@
 <?php
 /**
- * Shop System Plugins - Terms of Use
- *
- * The plugins offered are provided free of charge by Wirecard Central Eastern Europe GmbH
- * (abbreviated to Wirecard CEE) and are explicitly not part of the Wirecard CEE range of
- * products and services.
- *
- * They have been tested and approved for full functionality in the standard configuration
- * (status on delivery) of the corresponding shop system. They are under General Public
- * License Version 2 (GPLv2) and can be used, developed and passed on to third parties under
- * the same terms.
- *
- * However, Wirecard CEE does not provide any guarantee or accept any liability for any errors
- * occurring when used in an enhanced, customized shop system configuration.
- *
- * Operation in an enhanced, customized configuration is at your own risk and requires a
- * comprehensive test phase by the user of the plugin.
- *
- * Customers use the plugins at their own risk. Wirecard CEE does not guarantee their full
- * functionality neither does Wirecard CEE assume liability for any disadvantages related to
- * the use of the plugins. Additionally, Wirecard CEE does not guarantee the full functionality
- * for customized shop systems or installed plugins of other vendors of plugins within the same
- * shop system.
- *
- * Customers are responsible for testing the plugin's functionality before starting productive
- * operation.
- *
- * By installing the plugin into the shop system the customer agrees to these terms of use.
- * Please do not use the plugin if you do not agree to these terms of use!
- */
+ * Shop System Plugins
+ * - Terms of use can be found under
+ * https://guides.qenta.com/shop_plugins:info
+ * - License can be found under:
+ * https://github.com/qenta-cee/virtuemart3-qcp/blob/master/LICENSE
+*/
 
 defined( '_JEXEC' ) or die();
 ?>
@@ -42,12 +19,12 @@ $url = JURI::root() . 'images/stories/virtuemart/' . $this->_psType . '/';
 foreach ( $viewData['paymenttypes'] as $pt ) {
     ?>
     <div class="vm-payment-plugin-single">
-        <input class="wirecard_paymenttype" id="wirecard_<?php echo strtolower( $pt['value'] ) ?>" type="radio"
-               name="wirecard_paymenttype"
+        <input class="qenta_paymenttype" id="qenta_<?php echo strtolower( $pt['value'] ) ?>" type="radio"
+               name="qenta_paymenttype"
                value="<?php echo strtolower( $pt['value'] ) ?>" <?php if ( $viewData['paymenttype_selected'] == strtolower( $pt['value'] ) )
             echo ' checked="checked"' ?> />
 
-        <label for="wirecard_<?php echo strtolower( $pt['value'] ) ?>">
+        <label for="qenta_<?php echo strtolower( $pt['value'] ) ?>">
                 <span class="vmpayment">
                     <?php if ( isset( $pt['image'] ) ) { ?>
                         <span class="vmCartPaymentLogo">
@@ -111,7 +88,7 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
     <?php } ?>
     <?php if ( isset( $pt['financial_inst'] ) ) { ?>
         <div style="margin-left:23px; display: <?= ($viewData['paymenttype_selected'] !== strtolower( $pt['value'] )) ? 'none' : 'block';?>;" class="additional-information">
-            <b><?php echo JText::_('VMPAYMENT_WIRECARDCEECHECKOUT_FINANCIAL_INST_HEADER'); ?></b><br/>
+            <b><?php echo JText::_('VMPAYMENT_qentaCEECHECKOUT_FINANCIAL_INST_HEADER'); ?></b><br/>
             <select name="financialInstitution_<?= strtolower( $pt['value'] ); ?>" id="financialInstitutions_<?= strtolower( $pt['value'] ); ?>">
                 <?php foreach($pt['financial_inst'] as $key => $value) { ?>
                     <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
@@ -147,7 +124,7 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
                     jQuery('.vmLoadingDiv').remove();
                     jQuery('#checkoutFormSubmit').prop("disabled", false);
                     jQuery('#checkoutFormSubmit').addClass("vm-button-correct");
-                    alert("<?php echo JText::_( 'VMPAYMENT_WIRECARDCEECHECKOUT_BIRTHDAY_ERROR' ); ?>");
+                    alert("<?php echo JText::_( 'VMPAYMENT_qentaCEECHECKOUT_BIRTHDAY_ERROR' ); ?>");
                     return false;
                 }
             }
@@ -165,14 +142,14 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
                     jQuery('#checkoutFormSubmit').prop("disabled", false);
                     jQuery('#checkoutFormSubmit').addClass("vm-button-correct");
                     event.preventDefault();
-                    alert("<?php echo JText::_( 'VMPAYMENT_WIRECARDCEECHECKOUT_PAYOLUTION_CONSENT_ACCEPT' ); ?>");
+                    alert("<?php echo JText::_( 'VMPAYMENT_qentaCEECHECKOUT_PAYOLUTION_CONSENT_ACCEPT' ); ?>");
                     return false;
                 }
             }
             return true;
         }
         jQuery("#checkoutForm").submit(function (event) {
-            jQuery('.wirecard_paymenttype').each(function () {
+            jQuery('.qenta_paymenttype').each(function () {
                 if (jQuery(this).prop('checked')) {
                     if (!checkBirthday(this.value, event) || !checkPayolutionConsent(this.value, event)) {
                         event.preventDefault();
@@ -181,7 +158,7 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
             });
         });
 
-        jQuery('.wirecard_paymenttype').each(function () {
+        jQuery('.qenta_paymenttype').each(function () {
             jQuery(this).change(function (evt) {
                 jQuery('#payment_id_<?php echo $viewData['paymentmethod_id'] ?>').prop('checked', true);
                 jQuery('.additional-information').hide();
@@ -193,7 +170,7 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
         });
         jQuery("button[name='updatecart']").click(function (event) {
             event.preventDefault();
-            var val = jQuery('.wirecard_paymenttype:checked').val(),
+            var val = jQuery('.qenta_paymenttype:checked').val(),
                 data = getData(jQuery('.additional-information:visible'));
             if (!checkBirthday(val, event) || !checkPayolutionConsent(this.value, event)) {
                 event.preventDefault();
@@ -201,8 +178,8 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
                 jQuery.ajax({
                     type: "POST",
                     dataType: "json",
-                    data: {"wcp_additional" : data, "wirecard_paymenttype": val},
-                    url: "<?php echo JURI::root() ?>index.php?option=com_virtuemart&view=plugin&type=vmpayment&nosef=1&name=wirecardceecheckout&loadJS=1&action=changePaymentTypeAjax",
+                    data: {"wcp_additional" : data, "qenta_paymenttype": val},
+                    url: "<?php echo JURI::root() ?>index.php?option=com_virtuemart&view=plugin&type=vmpayment&nosef=1&name=qentaceecheckout&loadJS=1&action=changePaymentTypeAjax",
                     complete : function () {
                         jQuery('#paymentForm').submit();
                     }
