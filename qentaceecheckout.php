@@ -863,6 +863,15 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 			$session = JFactory::getSession();
 			$data = $session->get('QENTACEECHECKOUT', null, 'vm');
 			$sessionQenta = unserialize($data);
+
+			/**
+             * If only one payment plugin is published, then selection of payment methods within QPay checkout page
+             * is not possible. Thus a default has to be used.
+             */
+			if(!$sessionQenta->paymenttype) {
+			    $sessionQenta->paymenttype = 'SELECT';
+            }
+
 			$paymentType = strtoupper($sessionQenta->paymenttype);
 
 			if ($paymentType == QentaCEE\QPay\PaymentType::INVOICE . 'B2B') {
