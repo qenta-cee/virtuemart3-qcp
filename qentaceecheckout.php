@@ -1434,7 +1434,7 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 					'city'
 				);
 				foreach ( $fields as $f ) {
-					if ( $billingAddress[ $f ] != $shippingAddress[ $f ] ) {
+                    if ( isset($billingAddress[$f],$shippingAddress[$f]) && $billingAddress[ $f ] != $shippingAddress[ $f ] ) {
 						return false;
 					}
 				}
