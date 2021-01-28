@@ -41,7 +41,7 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
         <div style="margin-left:23px; display: <?= ($viewData['paymenttype_selected'] !== strtolower( $pt['value'] )) ? 'none' : 'block';?>;" class="additional-information">
             <b><?php echo $pt['birthday_header']; ?></b><br/>
             <?php
-            $birthday = '<select name="wcp_day" id="wcp_day_'.strtolower($pt['value']).'" style="width:auto;">';
+            $birthday = '<select name="qcp_day" id="qcp_day_'.strtolower($pt['value']).'" style="width:auto;">';
             for ( $day = 31; $day > 0; $day -- ) {
                 $selected = '';
                 if ($viewData['birth_day'] == $day){
@@ -52,7 +52,7 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
 
             $birthday .= '</select>';
 
-            $birthday .= '<select name="wcp_month" id="wcp_month_'.strtolower($pt['value']).'" style="width:auto;">';
+            $birthday .= '<select name="qcp_month" id="qcp_month_'.strtolower($pt['value']).'" style="width:auto;">';
             for ( $month = 12; $month > 0; $month -- ) {
                 $selected = '';
                 if ($viewData['birth_month'] == $month){
@@ -62,7 +62,7 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
             }
             $birthday .= '</select>';
 
-            $birthday .= '<select name="wcp_year" id="wcp_year_'.strtolower($pt['value']).'" style="width:auto;">';
+            $birthday .= '<select name="qcp_year" id="qcp_year_'.strtolower($pt['value']).'" style="width:auto;">';
             for ( $year = date( "Y" ); $year > 1900; $year -- ) {
                 $selected = '';
                 if ($viewData['birth_year'] == $year){
@@ -108,10 +108,10 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
             return data;
         }
         function checkBirthday(selector, event) {
-            if (jQuery('#wcp_day_' + selector).val()) {
-                var day = jQuery('#wcp_day_' + selector).val();
-                var month = jQuery('#wcp_month_' + selector).val();
-                var year = jQuery('#wcp_year_' + selector).val();
+            if (jQuery('#qcp_day_' + selector).val()) {
+                var day = jQuery('#qcp_day_' + selector).val();
+                var month = jQuery('#qcp_month_' + selector).val();
+                var year = jQuery('#qcp_year_' + selector).val();
                 var dateStr = year + '-' + month + '-' + day;
                 var minAge = 18;
 
@@ -178,7 +178,7 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
                 jQuery.ajax({
                     type: "POST",
                     dataType: "json",
-                    data: {"wcp_additional" : data, "qenta_paymenttype": val},
+                    data: {"qcp_additional" : data, "qenta_paymenttype": val},
                     url: "<?php echo JURI::root() ?>index.php?option=com_virtuemart&view=plugin&type=vmpayment&nosef=1&name=qentaceecheckout&loadJS=1&action=changePaymentTypeAjax",
                     complete : function () {
                         jQuery('#paymentForm').submit();
