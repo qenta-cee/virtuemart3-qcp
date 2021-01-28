@@ -88,7 +88,7 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
     <?php } ?>
     <?php if ( isset( $pt['financial_inst'] ) ) { ?>
         <div style="margin-left:23px; display: <?= ($viewData['paymenttype_selected'] !== strtolower( $pt['value'] )) ? 'none' : 'block';?>;" class="additional-information">
-            <b><?php echo JText::_('VMPAYMENT_qentaCEECHECKOUT_FINANCIAL_INST_HEADER'); ?></b><br/>
+            <b><?php echo JText::_('VMPAYMENT_QENTACEECHECKOUT_FINANCIAL_INST_HEADER'); ?></b><br/>
             <select name="financialInstitution_<?= strtolower( $pt['value'] ); ?>" id="financialInstitutions_<?= strtolower( $pt['value'] ); ?>">
                 <?php foreach($pt['financial_inst'] as $key => $value) { ?>
                     <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
@@ -124,7 +124,7 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
                     jQuery('.vmLoadingDiv').remove();
                     jQuery('#checkoutFormSubmit').prop("disabled", false);
                     jQuery('#checkoutFormSubmit').addClass("vm-button-correct");
-                    alert("<?php echo JText::_( 'VMPAYMENT_qentaCEECHECKOUT_BIRTHDAY_ERROR' ); ?>");
+                    alert("<?php echo JText::_( 'VMPAYMENT_QENTACEECHECKOUT_BIRTHDAY_ERROR' ); ?>");
                     return false;
                 }
             }
@@ -142,7 +142,7 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
                     jQuery('#checkoutFormSubmit').prop("disabled", false);
                     jQuery('#checkoutFormSubmit').addClass("vm-button-correct");
                     event.preventDefault();
-                    alert("<?php echo JText::_( 'VMPAYMENT_qentaCEECHECKOUT_PAYOLUTION_CONSENT_ACCEPT' ); ?>");
+                    alert("<?php echo JText::_( 'VMPAYMENT_QENTACEECHECKOUT_PAYOLUTION_CONSENT_ACCEPT' ); ?>");
                     return false;
                 }
             }
