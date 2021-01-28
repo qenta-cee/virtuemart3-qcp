@@ -101,19 +101,19 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 
 			$consumerData = new QentaCEE\Stdlib\ConsumerData();
 			$consumerData->setUserAgent($_SERVER['HTTP_USER_AGENT'])
-			             ->setIpAddress($_SERVER['REMOTE_ADDR']);
+						 ->setIpAddress($_SERVER['REMOTE_ADDR']);
 
 			$client->setAmount(0.01)
-			       ->setCurrency('EUR')
-			       ->setPaymentType(QentaCEE\QPay\PaymentType::CCARD)
-			       ->setOrderDescription('Config Test')
-			       ->setSuccessUrl($returnUrl)
-			       ->setCancelUrl($returnUrl)
-			       ->setFailureUrl($returnUrl)
-			       ->setConfirmUrl($returnUrl)
-			       ->setServiceUrl($data['params']['service_url'] ? $data['params']['service_url'] : ' ')
-			       ->setImageUrl($data['params']['image_url'] ? $data['params']['image_url'] : ' ')
-			       ->setConsumerData($consumerData);
+				   ->setCurrency('EUR')
+				   ->setPaymentType(QentaCEE\QPay\PaymentType::CCARD)
+				   ->setOrderDescription('Config Test')
+				   ->setSuccessUrl($returnUrl)
+				   ->setCancelUrl($returnUrl)
+				   ->setFailureUrl($returnUrl)
+				   ->setConfirmUrl($returnUrl)
+				   ->setServiceUrl($data['params']['service_url'] ? $data['params']['service_url'] : ' ')
+				   ->setImageUrl($data['params']['image_url'] ? $data['params']['image_url'] : ' ')
+				   ->setConsumerData($consumerData);
 
 			$response = $client->initiate();
 			if ($response->hasFailed()) {
@@ -278,7 +278,7 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 		if ($input->get('iframebreakout') == 'true') {
 			print $this->renderByLayout('breakoutiframe', array(
 				'returnUrl' => JROUTE::_(JURI::root() .
-				                         'index.php?option=com_virtuemart&view=pluginresponse&task=pluginresponsereceived')
+					'index.php?option=com_virtuemart&view=pluginresponse&task=pluginresponsereceived')
 			));
 			die;
 		}
@@ -319,7 +319,7 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 
 		$paymentState = $input->get('paymentState');
 		if ($paymentState == QentaCEE\QPay\ReturnFactory::STATE_PENDING ||
-		    $paymentState == QentaCEE\QPay\ReturnFactory::STATE_SUCCESS
+			$paymentState == QentaCEE\QPay\ReturnFactory::STATE_SUCCESS
 		) {
 			$cart = VirtueMartCart::getCart();
 			$cart->emptyCart();
@@ -523,7 +523,7 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 		if ($input->get('iframebreakout') == 'true') {
 			print $this->renderByLayout('breakoutiframe', array(
 				'returnUrl' => JROUTE::_(JURI::root() .
-				                         'index.php?option=com_virtuemart&view=pluginresponse&task=pluginUserPaymentCancel')
+					'index.php?option=com_virtuemart&view=pluginresponse&task=pluginUserPaymentCancel')
 			));
 
 			die;
@@ -536,7 +536,7 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 			return null; // Another method was selected, do nothing
 		}
 		if (empty($order_number) ||
-		    !$this->selectedThisElement($method->payment_element)
+			!$this->selectedThisElement($method->payment_element)
 		) {
 			return null;
 		}
@@ -616,10 +616,10 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 		$sessionQenta->birthYear = $birthYear;
 		$session->set('QENTACEECHECKOUT', serialize($sessionQenta), 'vm');
 
-        if (!$found) {
-            $msg .= JText::_('VMPAYMENT_QENTACEECHECKOUT_ERROR_PAYMENTTYPE');
-            return false;
-        }
+		if (!$found) {
+			$msg .= JText::_('VMPAYMENT_QENTACEECHECKOUT_ERROR_PAYMENTTYPE');
+			return false;
+		}
 
 		return true;
 	}
@@ -633,17 +633,15 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 	 */
 	public function plgVmOnCheckoutCheckDataPayment(VirtueMartCart $cart)
 	{
-        $data = vRequest::getPost();
 
-        $cart->virtuemart_paymentmethod_id = $data['virtuemart_paymentmethod_id'];
-        if (!$this->selectedThisByMethodId($cart->virtuemart_paymentmethod_id)) {
-            return null; // Another method was selected, do nothing
-        }
+		$data = vRequest::getPost();
+		if(array_key_exists('qenta_paymenttype', $data)) {
+			$this->changePaymentTypeAjax($data);
+		}
 
-        $data = vRequest::getPost();
-        if(array_key_exists('qenta_paymenttype', $data)) {
-            $this->changePaymentTypeAjax($data);
-        }
+		if (!$this->selectedThisByMethodId($cart->virtuemart_paymentmethod_id)) {
+			return null; // Another method was selected, do nothing
+		}
 
 		$method = $this->getVmPluginMethod($cart->virtuemart_paymentmethod_id);
 
@@ -671,7 +669,7 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 	 *
 	 * @param VirtueMartCart $cart
 	 * @param array $cart_prices
-	 * @param                $cart_prices_name
+	 * @param				$cart_prices_name
 	 * @return bool|null
 	 */
 	public function plgVmonSelectedCalculatePricePayment(VirtueMartCart $cart, array &$cart_prices, &$cart_prices_name)
@@ -770,7 +768,7 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 	}
 
 	######################################################################
-	#                        PROTECTED METHODS                           #
+	#						PROTECTED METHODS						   #
 	######################################################################
 
 	/**
@@ -816,24 +814,23 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 			$birthMonth = $sessionQenta->birthMonth;
 			$birthYear = $sessionQenta->birthYear;
 		}
-
 		$ratepay = "";
-        if (((int)$this->_getMethod()->paymenttype_invoice == 1 && $this->_getInvoiceFinancialInstitution() == "ratepay") ||
-            ((int)$this->_getMethod()->paymenttype_installment == 1 && $this->_getInstallmentFinancialInstitution() == "ratepay")) {
-            $customer_id = $this->_getCustomerId();
-            if (isset($_SESSION['qcp-consumerDeviceId'])) {
-                $consumerDeviceId = $_SESSION['qcp-consumerDeviceId'];
-            } else {
-                $timestamp = microtime();
-                $consumerDeviceId = md5( $customer_id . "_" . $timestamp );
-                $_SESSION['qcp-consumerDeviceId'] = $consumerDeviceId;
-            }
+		if (((int)$this->_getMethod()->paymenttype_invoice == 1 && $this->_getInvoiceFinancialInstitution() == "ratepay") ||
+			((int)$this->_getMethod()->paymenttype_installment == 1 && $this->_getInstallmentFinancialInstitution() == "ratepay")) {
+			$customer_id = $this->_getCustomerId();
+			if (isset($_SESSION['qcp-consumerDeviceId'])) {
+				$consumerDeviceId = $_SESSION['qcp-consumerDeviceId'];
+			} else {
+				$timestamp = microtime();
+				$consumerDeviceId = md5( $customer_id . "_" . $timestamp );
+				$_SESSION['qcp-consumerDeviceId'] = $consumerDeviceId;
+			}
 
-            $ratepay = '<script language="JavaScript">var di = {t:"' . $consumerDeviceId . '",v:"WDWL",l:"Checkout"};</script>';
-            $ratepay .= '<script type="text/javascript" src="//d.ratepay.com/' . $consumerDeviceId . '/di.js"></script>';
-            $ratepay .= '<noscript><link rel="stylesheet" type="text/css" href="//d.ratepay.com/di.css?t=' . $consumerDeviceId . '&v=WDWL&l=Checkout"></noscript>';
-            $ratepay .= '<object type="application/x-shockwave-flash" data="//d.ratepay.com/WDWL/c.swf" width="0" height="0"><param name="movie" value="//d.ratepay.com/WDWL/c.swf" /><param name="flashvars" value="t=' . $consumerDeviceId . '&v=WDWL"/><param name="AllowScriptAccess" value="always"/></object>';
-        }
+			$ratepay = '<script language="JavaScript">var di = {t:"' . $consumerDeviceId . '",v:"WDWL",l:"Checkout"};</script>';
+			$ratepay .= '<script type="text/javascript" src="//d.ratepay.com/' . $consumerDeviceId . '/di.js"></script>';
+			$ratepay .= '<noscript><link rel="stylesheet" type="text/css" href="//d.ratepay.com/di.css?t=' . $consumerDeviceId . '&v=WDWL&l=Checkout"></noscript>';
+			$ratepay .= '<object type="application/x-shockwave-flash" data="//d.ratepay.com/WDWL/c.swf" width="0" height="0"><param name="movie" value="//d.ratepay.com/WDWL/c.swf" /><param name="flashvars" value="t=' . $consumerDeviceId . '&v=WDWL"/><param name="AllowScriptAccess" value="always"/></object>';
+		}
 
 		$html = $this->renderByLayout('displaypayment', array(
 			'paymenttypes' => $this->_getEnabledPaymentTypes(),
@@ -873,12 +870,12 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 			$sessionQenta = unserialize($data);
 
 			/**
-             * If only one payment plugin is published, then selection of payment methods within QPay checkout page
-             * is not possible. Thus a default has to be used.
-             */
+			 * If only one payment plugin is published, then selection of payment methods within QPay checkout page
+			 * is not possible. Thus a default has to be used.
+			 */
 			if(!$sessionQenta->paymenttype) {
-			    $sessionQenta->paymenttype = 'SELECT';
-            }
+				$sessionQenta->paymenttype = 'SELECT';
+			}
 
 			$paymentType = strtoupper($sessionQenta->paymenttype);
 
@@ -889,11 +886,11 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 			// consumer data (IP and User agent) are mandatory!
 			$consumerData = new QentaCEE\Stdlib\ConsumerData();
 			$consumerData->setUserAgent($_SERVER['HTTP_USER_AGENT'])
-			             ->setIpAddress($_SERVER['REMOTE_ADDR']);
+						 ->setIpAddress($_SERVER['REMOTE_ADDR']);
 
 			if ($this->_sendShippingInformation()
-			    || ($paymentType == QentaCEE\QPay\PaymentType::INVOICE && $this->_getMethod()->invoice_provider != 'payolution')
-			    || ($paymentType == QentaCEE\QPay\PaymentType::INSTALLMENT && $this->_getMethod()->installment_provider != 'payolution')
+				|| ($paymentType == QentaCEE\QPay\PaymentType::INVOICE && $this->_getMethod()->invoice_provider != 'payolution')
+				|| ($paymentType == QentaCEE\QPay\PaymentType::INSTALLMENT && $this->_getMethod()->installment_provider != 'payolution')
 			) {
 				$this->_setConsumerShippingInformation($consumerData);
 			}
@@ -903,21 +900,21 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 			}
 
 			if ($this->_sendBasketInformation()
-			    || ($paymentType == QentaCEE\QPay\PaymentType::INVOICE && $this->_getMethod()->invoice_provider != 'payolution')
-			    || ($paymentType == QentaCEE\QPay\PaymentType::INSTALLMENT && $this->_getMethod()->installment_provider != 'payolution')
+				|| ($paymentType == QentaCEE\QPay\PaymentType::INVOICE && $this->_getMethod()->invoice_provider != 'payolution')
+				|| ($paymentType == QentaCEE\QPay\PaymentType::INSTALLMENT && $this->_getMethod()->installment_provider != 'payolution')
 			) {
 				$client->setBasket($this->_generateBasketInformation($cart));
 			}
 
 			$returnUrl = JROUTE::_(JURI::root() .
-			                       'index.php?option=com_virtuemart&view=pluginresponse&task=pluginresponsereceived' .
-			                       '&iframebreakout=' . ($this->_useIFrame() ? 'true' : 'false') .
-			                       '&Itemid=' . JFactory::getApplication()->input->getInt('Itemid'));
+				'index.php?option=com_virtuemart&view=pluginresponse&task=pluginresponsereceived' .
+				'&iframebreakout=' . ($this->_useIFrame() ? 'true' : 'false') .
+				'&Itemid=' . JFactory::getApplication()->input->getInt('Itemid'));
 
 			$cancelURL = JROUTE::_(JURI::root() .
-			                       'index.php?option=com_virtuemart&view=pluginresponse&task=pluginUserPaymentCancel' .
-			                       '&iframebreakout=' . ($this->_useIFrame() ? 'true' : 'false') .
-			                       '&Itemid=' . JFactory::getApplication()->input->getInt('Itemid')
+				'index.php?option=com_virtuemart&view=pluginresponse&task=pluginUserPaymentCancel' .
+				'&iframebreakout=' . ($this->_useIFrame() ? 'true' : 'false') .
+				'&Itemid=' . JFactory::getApplication()->input->getInt('Itemid')
 			);
 
 			$confirmUrl = JROUTE::_(JURI::root() . 'index.php?option=com_virtuemart&view=pluginresponse&task=pluginnotification&tmpl=component');
@@ -929,25 +926,25 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 				self::$PLUGIN_VERSION);
 
 			$client->setAmount($this->_getAmount())
-			       ->setCurrency($this->_getOrderCurrency())
-			       ->setPaymentType($paymentType)
-			       ->setOrderDescription($this->_getOrderDescription())
-			       ->setPluginVersion($version)
-			       ->setSuccessUrl($returnUrl)
-			       ->setPendingUrl($returnUrl)
-			       ->setCancelUrl($cancelURL)
-			       ->setFailureUrl($returnUrl)
-			       ->setConfirmUrl($confirmUrl)
-			       ->setServiceUrl($this->_getServiceUrl())
-			       ->setImageUrl($this->_getImageUrl())
-			       ->setBackgroundColor($this->_getBackgroundColor())
-			       ->setConsumerData($consumerData)
-			       ->setDisplayText($this->_getDisplayText())
-			       ->setCustomerStatement($this->_getCustomerStatement($paymentType, $this->_getMethod()->shopname))
-			       ->setDuplicateRequestCheck($this->_getDuplicateRequestCheck())
-			       ->setMaxRetries($this->_getMaxRetries())
-			       ->setAutoDeposit($this->_getAutoDeposit($paymentType))
-			       ->setWindowName($this->_getWindowName());
+				   ->setCurrency($this->_getOrderCurrency())
+				   ->setPaymentType($paymentType)
+				   ->setOrderDescription($this->_getOrderDescription())
+				   ->setPluginVersion($version)
+				   ->setSuccessUrl($returnUrl)
+				   ->setPendingUrl($returnUrl)
+				   ->setCancelUrl($cancelURL)
+				   ->setFailureUrl($returnUrl)
+				   ->setConfirmUrl($confirmUrl)
+				   ->setServiceUrl($this->_getServiceUrl())
+				   ->setImageUrl($this->_getImageUrl())
+				   ->setBackgroundColor($this->_getBackgroundColor())
+				   ->setConsumerData($consumerData)
+				   ->setDisplayText($this->_getDisplayText())
+				   ->setCustomerStatement($this->_getCustomerStatement($paymentType, $this->_getMethod()->shopname))
+				   ->setDuplicateRequestCheck($this->_getDuplicateRequestCheck())
+				   ->setMaxRetries($this->_getMaxRetries())
+				   ->setAutoDeposit($this->_getAutoDeposit($paymentType))
+				   ->setWindowName($this->_getWindowName());
 
 			if ( isset( $_SESSION['qcp-consumerDeviceId'] ) ){
 				$client->consumerDeviceId = $_SESSION['qcp-consumerDeviceId'];
@@ -958,19 +955,19 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 				$client->setShippingProfile('NO_SHIPPING');
 			}
 
-            if ($paymentType == QentaCEE\QPay\PaymentType::IDL) {
-                if (isset($_POST['financialInstitution_idl'])) {
-                    $client->setFinancialInstitution($_POST['financialInstitution_idl']);
-                } else {
-                    $client->setFinancialInstitution($sessionQenta->additional["financialInstitution_idl"]);
-                }
-            } else if ($paymentType == QentaCEE\QPay\PaymentType::EPS) {
-                if (isset($_POST['financialInstitution_eps'])) {
-                    $client->setFinancialInstitution($_POST['financialInstitution_eps']);
-                } else {
-                    $client->setFinancialInstitution($sessionQenta->additional["financialInstitution_eps"]);
-                }
-            }
+			if ($paymentType == QentaCEE\QPay\PaymentType::IDL) {
+				if (isset($_POST['financialInstitution_idl'])) {
+					$client->setFinancialInstitution($_POST['financialInstitution_idl']);
+				} else {
+					$client->setFinancialInstitution($sessionQenta->additional["financialInstitution_idl"]);
+				}
+			} else if ($paymentType == QentaCEE\QPay\PaymentType::EPS) {
+				if (isset($_POST['financialInstitution_eps'])) {
+					$client->setFinancialInstitution($_POST['financialInstitution_eps']);
+				} else {
+					$client->setFinancialInstitution($sessionQenta->additional["financialInstitution_eps"]);
+				}
+			}
 
 			if (array_key_exists('ST', $order['details'])) {
 				$client->createConsumerMerchantCrmId($order['details']['ST']->email);
@@ -1296,13 +1293,13 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 		$countryCode = ShopFunctions::getCountryByID($shippingData->virtuemart_country_id, 'country_2_code');
 
 		$shippingAddress->setFirstname($shippingData->first_name)
-		                ->setLastname($shippingData->last_name)
-		                ->setAddress1($shippingData->address_1)
-		                ->setAddress2($shippingData->address_2)
-		                ->setCity($shippingData->city)
-		                ->setZipCode($shippingData->zip)
-		                ->setCountry($countryCode)
-		                ->setPhone($shippingData->phone_1);
+						->setLastname($shippingData->last_name)
+						->setAddress1($shippingData->address_1)
+						->setAddress2($shippingData->address_2)
+						->setCity($shippingData->city)
+						->setZipCode($shippingData->zip)
+						->setCountry($countryCode)
+						->setPhone($shippingData->phone_1);
 
 		if ($countryCode == 'US' || $countryCode == 'CA') {
 			$shippingAddress->setState(ShopFunctions::getStateByID($shippingData->virtuemart_state_id, 'state_2_code'));
@@ -1344,13 +1341,13 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 		$countryCode = ShopFunctions::getCountryByID($billingData->virtuemart_country_id, 'country_2_code');
 
 		$billingAddress->setFirstname($billingData->first_name)
-		               ->setLastname($billingData->last_name)
-		               ->setAddress1($billingData->address_1)
-		               ->setAddress2($billingData->address_2)
-		               ->setCity($billingData->city)
-		               ->setZipCode($billingData->zip)
-		               ->setCountry($countryCode)
-		               ->setPhone($billingData->phone_1);
+					   ->setLastname($billingData->last_name)
+					   ->setAddress1($billingData->address_1)
+					   ->setAddress2($billingData->address_2)
+					   ->setCity($billingData->city)
+					   ->setZipCode($billingData->zip)
+					   ->setCountry($countryCode)
+					   ->setPhone($billingData->phone_1);
 
 		if ($countryCode == 'US' || $countryCode == 'CA') {
 			$billingAddress->setState(ShopFunctions::getStateByID($billingData->virtuemart_state_id, 'state_2_code'));
@@ -1442,7 +1439,7 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 					'city'
 				);
 				foreach ( $fields as $f ) {
-                    if ( isset($billingAddress[$f],$shippingAddress[$f]) && $billingAddress[ $f ] != $shippingAddress[ $f ] ) {
+					if ( isset($billingAddress[$f],$shippingAddress[$f]) && $billingAddress[ $f ] != $shippingAddress[ $f ] ) {
 						return false;
 					}
 				}
@@ -1547,7 +1544,7 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 					'city'
 				);
 				foreach ( $fields as $f ) {
-					if ( $billingAddress[ $f ] != $shippingAddress[ $f ] ) {
+					if ( isset($billingAddress[ $f ]) && isset($shippingAddress[ $f ]) && $billingAddress[ $f ] != $shippingAddress[ $f ] ) {
 						return false;
 					}
 				}
@@ -1938,26 +1935,30 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 		return $this->onCheckAutomaticSelected($cart, $cart_prices, $paymentCounter);
 	}
 
-    public function changePaymentTypeAjax($data)
-    {
-        $session = JFactory::getSession();
-        $sessionData = $session->get('QENTACEECHECKOUT', 0, 'vm');
-        if (!empty($sessionData)) {
-            $sessionQenta = unserialize($sessionData);
-            $sessionQenta->paymenttype = $data["qenta_paymenttype"];
-            $sessionQenta->additional = $data["qcp_additional"];
-        }
-        $session->set('QENTACEECHECKOUT', serialize($sessionQenta), 'vm');
-    }
+	public function changePaymentTypeAjax($data)
+	{
+		$session = JFactory::getSession();
+		$cart = VirtueMartCart::getCart ();
 
-    public function plgVmOnSelfCallFE()
-    {
-        $action = vRequest::getCmd('action');
-        $data = vRequest::getPost();
-        switch ($action) {
-            case "changePaymentTypeAjax":
-                $this->changePaymentTypeAjax($data);
-                break;
-        }
-    }
+		$cart->setPaymentMethod(false,true,$data['pid']);
+		$sessionData = $session->get('QENTACEECHECKOUT', 0, 'vm');
+		if (!empty($sessionData)) {
+			$sessionQenta = unserialize($sessionData);
+			$sessionQenta->paymenttype = $data["qenta_paymenttype"];
+			$sessionQenta->additional = $data["qcp_additional"];
+		}
+		$session->set('QENTACEECHECKOUT', serialize($sessionQenta), 'vm');
+	}
+
+	public function plgVmOnSelfCallFE()
+	{
+
+		$action = vRequest::getCmd('action');
+		$data = vRequest::getPost();
+		switch ($action) {
+			case "changePaymentTypeAjax":
+				$this->changePaymentTypeAjax($data);
+				break;
+		}
+	}
 }

@@ -22,7 +22,7 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
         <input class="qenta_paymenttype" id="qenta_<?php echo strtolower( $pt['value'] ) ?>" type="radio"
                name="qenta_paymenttype"
                value="<?php echo strtolower( $pt['value'] ) ?>" <?php if ( $viewData['paymenttype_selected'] == strtolower( $pt['value'] ) )
-            echo ' checked="checked"' ?> />
+            echo ' checked="checked"' ?> onclick="selectQentaPayment(this,event)" />
 
         <label for="qenta_<?php echo strtolower( $pt['value'] ) ?>">
                 <span class="vmpayment">
@@ -99,6 +99,23 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
 <?php } ?>
 <div>
     <script type="text/javascript">
+        function selectQentaPayment(el,event){
+            var radio_group = jQuery('input[type=radio][name=virtuemart_paymentmethod_id]');
+            var radio_button = radio_group.filter('[value=<?php echo $viewData['paymentmethod_id']?>]');
+            var data = getData(jQuery('.additional-information:visible'));
+            radio_button.attr('checked','checked');
+            jQuery('.additional-information').hide();
+            jQuery(el).closest(".vm-payment-plugin-single").next(".additional-information").show();
+            jQuery.ajax({
+                type: "POST",
+                async: false,
+                dataType: "json",
+                data: {"qcp_additional" : data, "qenta_paymenttype": jQuery(el).val(), "pid": <?php echo $viewData['paymentmethod_id'] ?>},
+                url: "<?php echo JURI::root() ?>index.php?option=com_virtuemart&view=plugin&type=vmpayment&nosef=1&name=qentaceecheckout&loadJS=1&action=changePaymentTypeAjax"
+            });
+
+        }
+
         function getData(selector) {
             var data = {};
             jQuery('input, select', selector).each(function(){
@@ -148,6 +165,7 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
             }
             return true;
         }
+
         jQuery("#checkoutForm").submit(function (event) {
             jQuery('.qenta_paymenttype').each(function () {
                 if (jQuery(this).prop('checked')) {
@@ -156,35 +174,6 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
                     }
                 }
             });
-        });
-
-        jQuery('.qenta_paymenttype').each(function () {
-            jQuery(this).change(function (evt) {
-                jQuery('#payment_id_<?php echo $viewData['paymentmethod_id'] ?>').prop('checked', true);
-                jQuery('.additional-information').hide();
-                jQuery(this).closest(".vm-payment-plugin-single").next(".additional-information").show();
-            });
-        });
-        jQuery('input[name=virtuemart_paymentmethod_id]').change(function (evt) {
-            jQuery('.additional-information').remove();
-        });
-        jQuery("button[name='updatecart']").click(function (event) {
-            event.preventDefault();
-            var val = jQuery('.qenta_paymenttype:checked').val(),
-                data = getData(jQuery('.additional-information:visible'));
-            if (!checkBirthday(val, event) || !checkPayolutionConsent(this.value, event)) {
-                event.preventDefault();
-            } else {
-                jQuery.ajax({
-                    type: "POST",
-                    dataType: "json",
-                    data: {"qcp_additional" : data, "qenta_paymenttype": val},
-                    url: "<?php echo JURI::root() ?>index.php?option=com_virtuemart&view=plugin&type=vmpayment&nosef=1&name=qentaceecheckout&loadJS=1&action=changePaymentTypeAjax",
-                    complete : function () {
-                        jQuery('#paymentForm').submit();
-                    }
-                });
-            }
         });
     </script>
 </div>
