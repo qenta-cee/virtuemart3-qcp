@@ -633,9 +633,17 @@ class plgVmPaymentqentaceecheckout extends vmPSPlugin
 	 */
 	public function plgVmOnCheckoutCheckDataPayment(VirtueMartCart $cart)
 	{
-		if (!$this->selectedThisByMethodId($cart->virtuemart_paymentmethod_id)) {
-			return null; // Another method was selected, do nothing
-		}
+        $data = vRequest::getPost();
+
+        $cart->virtuemart_paymentmethod_id = $data['virtuemart_paymentmethod_id'];
+        if (!$this->selectedThisByMethodId($cart->virtuemart_paymentmethod_id)) {
+            return null; // Another method was selected, do nothing
+        }
+
+        $data = vRequest::getPost();
+        if(array_key_exists('qenta_paymenttype', $data)) {
+            $this->changePaymentTypeAjax($data);
+        }
 
 		$method = $this->getVmPluginMethod($cart->virtuemart_paymentmethod_id);
 
