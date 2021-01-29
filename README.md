@@ -1,4 +1,4 @@
-# QENTA Checkout Page plugin for VirtueMart 3
+# QPAY Checkout Page plugin for VirtueMart 3
 
 [![License](https://img.shields.io/badge/license-GPLv2-blue.svg)](https://raw.githubusercontent.com/qenta-cee/virtuemart3-qcp/master/LICENSE)
 [![PHP v7.2](https://img.shields.io/badge/PHP-v7.2-yellow.svg)](http://www.php.net)
