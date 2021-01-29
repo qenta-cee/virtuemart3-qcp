@@ -22,7 +22,7 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
         <input class="qenta_paymenttype" id="qenta_<?php echo strtolower( $pt['value'] ) ?>" type="radio"
                name="qenta_paymenttype"
                value="<?php echo strtolower( $pt['value'] ) ?>" <?php if ( $viewData['paymenttype_selected'] == strtolower( $pt['value'] ) )
-            echo ' checked="checked"' ?> onclick="selectQentaPayment(this,event)" />
+            echo ' checked="checked"' ?> onclick="selectQentaPayment(this)" />
 
         <label for="qenta_<?php echo strtolower( $pt['value'] ) ?>">
                 <span class="vmpayment">
@@ -99,11 +99,8 @@ foreach ( $viewData['paymenttypes'] as $pt ) {
 <?php } ?>
 <div>
     <script type="text/javascript">
-        function selectQentaPayment(el,event){
-            var radio_group = jQuery('input[type=radio][name=virtuemart_paymentmethod_id]');
-            var radio_button = radio_group.filter('[value=<?php echo $viewData['paymentmethod_id']?>]');
+        function selectQentaPayment(el){
             var data = getData(jQuery('.additional-information:visible'));
-            radio_button.attr('checked','checked');
             jQuery('.additional-information').hide();
             jQuery(el).closest(".vm-payment-plugin-single").next(".additional-information").show();
             jQuery.ajax({
