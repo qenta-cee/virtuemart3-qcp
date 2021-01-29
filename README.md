@@ -2,8 +2,8 @@
 
 [![License](https://img.shields.io/badge/license-GPLv2-blue.svg)](https://raw.githubusercontent.com/qenta-cee/virtuemart3-qcp/master/LICENSE)
 [![PHP v7.2](https://img.shields.io/badge/PHP-v7.2-yellow.svg)](http://www.php.net)
-[![Joomla v3.8.10](https://img.shields.io/badge/Joomla-v3.9.24-green.svg)](https://www.joomla.org)
-[![VirtueMart v3.2.14](https://img.shields.io/badge/VirtueMart-v3.8.6-green.svg)](https://www.virtuemart.de/)
+[![Joomla v3.9.24](https://img.shields.io/badge/Joomla-v3.9.24-green.svg)](https://www.joomla.org)
+[![VirtueMart v3.8.6](https://img.shields.io/badge/VirtueMart-v3.8.6-green.svg)](https://www.virtuemart.de/)
 
 QENTA Checkout Page plugin for VirtueMart 3
 
