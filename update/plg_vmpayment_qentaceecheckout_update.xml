@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updates>
+    <update>
+        <name>Qenta Checkout Page</name>
+        <description>Qenta - Your Full Service Payment Provider</description>
+        <type>plugin</type>
+        <folder>vmpayment</folder>
+        <element>qentaceecheckout</element>
+        <version>1.6.0</version>
+        <client>site</client>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/qenta-cee/virtuemart3-qcp/archive/1.6.0.zip</downloadurl>
+        </downloads>
+        <maintainer>QENTA Payment CEE <GmbH></GmbH></maintainer>
+        <maintainerurl>https://www.qenta-cee.com/</maintainerurl>
+        <targetplatform name="joomla" version="3.6"/>
+    </update>
+    <update>
+        <name>QENTA Checkout Page</name>
+        <description>QENTA - Your Full Service Payment Provider</description>
+        <type>plugin</type>
+        <folder>vmpayment</folder>
+        <element>qentaceecheckout</element>
+        <version>1.7.0</version>
+        <client>site</client>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/qenta-cee/virtuemart3-qcp/archive/1.7.0.zip</downloadurl>
+        </downloads>
+        <maintainer>QENTA Payment CEE GmbH</maintainer>
+        <maintainerurl>https://www.qenta-cee.com/</maintainerurl>
+        <targetplatform name="joomla" version="3.6"/>
+    </update>
+    <update>
+        <name>QENTA Checkout Page</name>
+        <description>QENTA - Your Full Service Payment Provider</description>
+        <type>plugin</type>
+        <folder>vmpayment</folder>
+        <element>qentaceecheckout</element>
+        <version>1.7.1</version>
+        <client>site</client>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/qenta-cee/virtuemart3-qcp/archive/1.7.1.zip</downloadurl>
+        </downloads>
+        <maintainer>QENTA Payment CEE GmbH</maintainer>
+        <maintainerurl>https://www.qenta-cee.com/</maintainerurl>
+        <targetplatform name="joomla" version="3.6"/>
+    </update>
+    <update>
+        <name>QENTA Checkout Page</name>
+        <description>QENTA Payment CEE GmbH - Your Full Service Payment Provider</description>
+        <type>plugin</type>
+        <folder>vmpayment</folder>
+        <element>qentaceecheckout</element>
+        <version>1.7.2</version>
+        <client>site</client>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/qenta-cee/virtuemart3-qcp/archive/1.7.2.zip</downloadurl>
+        </downloads>
+        <maintainer>QENTA Payment CEE GmbH</maintainer>
+        <maintainerurl>https://www.qenta-cee.com/</maintainerurl>
+        <targetplatform name="joomla" version="3.6"/>
+    </update>
+    <update>
+        <name>QENTA Checkout Page</name>
+        <description>QENTA Payment CEE GmbH - Your Full Service Payment Provider</description>
+        <type>plugin</type>
+        <folder>vmpayment</folder>
+        <element>qentaceecheckout</element>
+        <version>1.7.3</version>
+        <client>site</client>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/qenta-cee/virtuemart3-qcp/archive/1.7.3.zip</downloadurl>
+        </downloads>
+        <maintainer>QENTA Payment CEE GmbH</maintainer>
+        <maintainerurl>https://www.qenta-cee.com/</maintainerurl>
+        <targetplatform name="joomla" version="3.6"/>
+    </update>
+    <update>
+        <name>QENTA Checkout Page</name>
+        <description>QENTA Payment CEE GmbH - Your Full Service Payment Provider</description>
+        <type>plugin</type>
+        <folder>vmpayment</folder>
+        <element>qentaceecheckout</element>
+        <version>1.7.4</version>
+        <client>site</client>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/qenta-cee/virtuemart3-qcp/archive/1.7.4.zip</downloadurl>
+        </downloads>
+        <maintainer>QENTA Payment CEE GmbH</maintainer>
+        <maintainerurl>https://www.qenta-cee.com/</maintainerurl>
+        <targetplatform name="joomla" version="3.6"/>
+    </update>
+    <update>
+        <name>QENTA Checkout Page</name>
+        <description>QENTA Payment CEE GmbH - Your Full Service Payment Provider</description>
+        <type>plugin</type>
+        <folder>vmpayment</folder>
+        <element>qentaceecheckout</element>
+        <version>1.7.5</version>
+        <client>site</client>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/qenta-cee/virtuemart3-qcp/archive/1.7.5.zip</downloadurl>
+        </downloads>
+        <maintainer>QENTA Payment CEE GmbH</maintainer>
+        <maintainerurl>https://www.qenta-cee.com/</maintainerurl>
+        <targetplatform name="joomla" version="3.6"/>
+    </update>
+    <update>
+        <name>QENTA Checkout Page</name>
+        <description>QENTA Payment CEE GmbH - Your Full Service Payment Provider</description>
+        <type>plugin</type>
+        <folder>vmpayment</folder>
+        <element>qentaceecheckout</element>
+        <version>1.7.6</version>
+        <client>site</client>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/qenta-cee/virtuemart3-qcp/archive/1.7.6.zip</downloadurl>
+        </downloads>
+        <maintainer>QENTA Payment CEE GmbH</maintainer>
+        <maintainerurl>https://www.qenta-cee.com/</maintainerurl>
+        <targetplatform name="joomla" version="3.6"/>
+    </update>
+    <update>
+        <name>QENTA Checkout Page</name>
+        <description>QENTA Payment CEE GmbH - Your Full Service Payment Provider</description>
+        <type>plugin</type>
+        <folder>vmpayment</folder>
+        <element>qentaceecheckout</element>
+        <version>2.0.0</version>
+        <client>site</client>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/qenta-cee/virtuemart3-qcp/archive/2.0.0.zip</downloadurl>
+        </downloads>
+        <maintainer>QENTA Payment CEE GmbH</maintainer>
+        <maintainerurl>https://www.qenta-cee.com/</maintainerurl>
+        <targetplatform name="joomla" version="3.9"/>
+    </update>
+</updates>
